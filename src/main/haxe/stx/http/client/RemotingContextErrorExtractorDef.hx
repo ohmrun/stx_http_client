@@ -1,5 +1,5 @@
 package stx.http.client;
 
-interface RemotingContextErrorExtractorApi<T,E>{
+typedef RemotingContextErrorExtractorDef<T,E> = {
   public function extract(response:Response,t:Option<T>):Defect<E>;
 }

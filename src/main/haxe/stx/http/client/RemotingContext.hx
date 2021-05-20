@@ -12,7 +12,7 @@ class RemotingContext<T,E>{
   public final request   : Request; 
   public final response  : Response;
 
-  public final internal  : RemotingContextExtractorApi<T,E>;
+  public final internal  : RemotingContextExtractorDef<T,E>;
 
   public var error(get,null) : Defect<E>;
   public function get_error(){

@@ -3,7 +3,7 @@ package stx.http.client;
 typedef HeadersDef = Array<Pair<HeaderId,String>>;
 
 @:forward abstract Headers(HeadersDef) from HeadersDef{
-  public function new(self) this = self;
+  public function new(?self) this = __.option(self).defv([]);
   static public function unit(){ return lift([]); }
   static public function lift(self:HeadersDef):Headers return new Headers(self);
   

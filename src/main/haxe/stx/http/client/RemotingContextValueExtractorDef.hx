@@ -1,5 +1,5 @@
 package stx.http.client;
 
-interface RemotingContextValueExtractorApi<T,E>{
+typedef RemotingContextValueExtractorDef<T,E> = {
   public function extract(dyn:Dynamic):Option<Outcome<T,Defect<E>>>;
 }

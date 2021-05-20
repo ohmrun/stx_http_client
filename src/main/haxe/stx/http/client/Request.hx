@@ -15,7 +15,7 @@ package stx.http.client;
 @:forward abstract Request(RequestCls) from RequestCls to RequestCls{
   public function new(self) this = self;
   static public function lift(self:RequestCls):Request return new Request(self);
-  static public function make(url:String,method:HttpMethod,headers:Headers,?body:Content<Dynamic>){
+  static public function make(method:HttpMethod,url:String,?headers:Headers,?body:Content<Dynamic>){
     return __.option(body).is_defined().if_else(
       () -> 
       ({
@@ -33,7 +33,7 @@ package stx.http.client;
   }  
   @:to public function toNodeFetchRequest(){
     var headers = new node_fetch.Headers();
-    for(i in this.headers){
+    for(i in __.option(this.headers).defv(new Headers())){
       headers.set(i.a.toString(),i.b);
     }
     return switch(this.method){
@@ -52,10 +52,10 @@ package stx.http.client;
     }
   }
   
-  public function copy(?url:String,?method:HttpMethod,?headers:Headers,?body:Dynamic){
+  public function copy(?method:HttpMethod,?url:String,?headers:Headers,?body:Dynamic){
     return make(
-      __.option(url).defv(this.url),
       __.option(method).defv(this.method),
+      __.option(url).defv(this.url),
       __.option(headers.copy()).defv(this.headers.copy()),
       __.option(body).defv(this.body)
     );

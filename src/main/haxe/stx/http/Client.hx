@@ -11,11 +11,14 @@ typedef RemotingContext<T,E>              = stx.http.client.RemotingContext<T,E>
 typedef RemotingContextCtr                = stx.http.client.RemotingContextCtr;
 typedef RequestCtr                        = stx.http.client.RequestCtr;
 typedef Request                           = stx.http.client.Request;
-typedef RequestCls                        = stx.http.client.Request.RequestCls;
-typedef RequestOptions                    = stx.http.client.RequestOptions;
-typedef RequestOptionsCtr                 = stx.http.client.RequestOptionsCtr;
-typedef RequestOptionsCtrApi              = stx.http.client.RequestOptionsCtrApi;
-typedef Response                          = node_fetch.Response;
+typedef RemotingContextExtractorDef<T,E>        = stx.http.client.RemotingContextExtractorDef<T,E>;
+typedef RemotingContextValueExtractorDef<T,E>   = stx.http.client.RemotingContextValueExtractorDef<T,E>;
+typedef RemotingContextErrorExtractorDef<T,E>   = stx.http.client.RemotingContextErrorExtractorDef<T,E>;
+typedef RequestCls                              = stx.http.client.Request.RequestCls;
+typedef RequestOptions                          = stx.http.client.RequestOptions;
+typedef RequestOptionsCtr                       = stx.http.client.RequestOptionsCtr;
+typedef RequestOptionsCtrApi                    = stx.http.client.RequestOptionsCtrApi;
+typedef Response                                = node_fetch.Response;
 
 
 class Client{
