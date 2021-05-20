@@ -1,0 +1,23 @@
+{
+  "build" : {
+    "-D"  : [
+      "no-deprecation-warnings"
+    ],
+    "-cp" : "src/main/haxe",
+    "-lib" : [
+      "tink_core",
+      "hxnodejs",
+      "stx_pico",
+      "stx_nano",
+      "stx_log",
+      "stx_nodejs"
+    ],
+    "node" : {
+      "-main" : "Main",
+      "-js"   : "build/main.js"
+    }
+  },
+  "run" : {
+
+  }
+}

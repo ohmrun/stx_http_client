@@ -1,0 +1,7 @@
+-main Main
+-cp src/main/haxe
+-lib tink_core
+-lib hxnodejs
+-lib stx_pico
+-lib stx_nano
+-js build/main.js
