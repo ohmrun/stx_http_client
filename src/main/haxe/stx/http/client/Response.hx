@@ -20,12 +20,23 @@ typedef ResponseDef<T> = {
       messages  : __.option(messages).def(() -> [])
     });
   }
-  @:from static public function fromNodeFetchResponse(self:node_fetch.Response):Response<Pledge<Dynamic,Dynamic>>{
+  @:from static public function fromNodeFetchResponse(self:node_fetch.Response):Response<Pledge<Dynamic,StxHttpClientFailure>>{
     return make(
       Math.round(self.status),
       () -> {
         return try{
-          __.accept(self.json().toPledge());
+          __.accept(
+            self.json().toPledge().rectify(
+              err -> switch(__.tracer()(err.data)){
+                case Some(ERR(str)) if (str.toString().startsWith("FetchError: invalid json response body at")) :
+                  trace("jere");
+                  __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
+                default :
+                  trace(err); 
+                  __.reject(err);
+              }
+            )
+          );
         }catch(e:Dynamic){
           __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
         }
