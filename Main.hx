@@ -12,7 +12,7 @@ class Main{
         extract : (dyn:Dynamic) -> (__.option(__.success((dyn:Dyn))):Option<Outcome<Dynamic,Defect<Dynamic>>>)
       }:RemotingContextValueExtractorDef<Dynamic,Dynamic>),
       error : ({
-        extract : (res:Response,val:Option<Dynamic>) -> (Defect.unit():Defect<Dynamic>)
+        extract : (res:Response<Dynamic>,val:Option<Dynamic>) -> (Defect.unit():Defect<Dynamic>)
       }:RemotingContextErrorExtractorDef<Dynamic,Dynamic>)
     }:RemotingContextExtractorDef<Dynamic,Dynamic>);
     

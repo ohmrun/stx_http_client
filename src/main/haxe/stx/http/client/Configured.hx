@@ -7,5 +7,6 @@ class Configured<C:FetchModelConfigDef> extends Clazz{
     super();
     this.config = config;
   }
+
   
 }

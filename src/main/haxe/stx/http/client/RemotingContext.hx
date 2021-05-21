@@ -10,7 +10,7 @@ class RemotingContext<T,E>{
   private final extract  : Dynamic;
 
   public final request   : Request; 
-  public final response  : Response;
+  public final response  : Response<Dynamic>;
 
   public final internal  : RemotingContextExtractorDef<T,E>;
 

@@ -1,18 +1,29 @@
 package stx.http.client;
 
-typedef HeadersDef = Array<Pair<HeaderId,String>>;
+typedef HeadersDef = Array<Tup2<HeaderId,String>>;
 
 @:forward abstract Headers(HeadersDef) from HeadersDef{
   public function new(?self) this = __.option(self).defv([]);
   static public function unit(){ return lift([]); }
   static public function lift(self:HeadersDef):Headers return new Headers(self);
-  
+
   @:to public function toNodeFetchHeaders(){
     var next = new node_fetch.Headers();
     for(tp in this){
-      next.set(tp.a.toString(),tp.b);
+      switch(tp){
+        case tuple2(a,b) : next.set(a.toString(),b); 
+      }
     }
     return next;
+  }
+  @:from static public function fromNodeFetchHeaders(self:node_fetch.Headers){
+    var res = [];
+    self.forEach(
+      (value,name) -> {
+        res.push(tuple2(cast name,value));
+      }
+    );
+    return lift(res);
   }
   public function prj():HeadersDef return this;
   private var self(get,never):Headers;

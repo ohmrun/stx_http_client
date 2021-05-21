@@ -34,7 +34,7 @@ package stx.http.client;
   @:to public function toNodeFetchRequest(){
     var headers = new node_fetch.Headers();
     for(i in __.option(this.headers).defv(new Headers())){
-      headers.set(i.a.toString(),i.b);
+      headers.set(i.fst().toString(),i.snd());
     }
     return switch(this.method){
       case POST : return new node_fetch.Request({ href : this.url },
