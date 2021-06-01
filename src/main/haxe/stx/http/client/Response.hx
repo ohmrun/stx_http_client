@@ -28,11 +28,16 @@ typedef ResponseDef<T> = {
           __.accept(
             self.json().toPledge().rectify(
               err -> switch(__.tracer()(err.data)){
-                case Some(ERR(str)) if (str.toString().startsWith("FetchError: invalid json response body at")) :
-                  trace("jere");
-                  __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
+                case Some(ERR(str)) :
+                  var match = Chars.lift(str.toString()).starts_with("FetchError:");
+                  trace('"$str" $match');
+                  return if (str.toString().startsWith("FetchError: invalid json")){
+                    trace("JERE");
+                    __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
+                  }else{
+                    __.reject(err);
+                  }
                 default :
-                  trace(err); 
                   __.reject(err);
               }
             )
