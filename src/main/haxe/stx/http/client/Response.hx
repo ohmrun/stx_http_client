@@ -20,6 +20,38 @@ typedef ResponseDef<T> = {
       messages  : __.option(messages).def(() -> [])
     });
   }
+  #if js
+  @:from static public function fromJsResponse(self:js.html.Response):Response<Pledge<Dynamic,StxHttpClientFailure>>{
+    return make(
+      self.status,
+      () -> {
+          return try{
+            __.accept(
+              self.json().toPledge().rectify(
+                err -> switch(__.tracer()(err.data)){
+                  case Some(ERR(str)) :
+                    var match = Chars.lift(str.toString()).starts_with("FetchError:");
+                    trace('"$str" $match');
+                    return if (str.toString().startsWith("FetchError: invalid json")){
+                      trace("JERE");
+                      __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
+                    }else{
+                      __.reject(err);
+                    }
+                  default :
+                    __.reject(err);
+                }
+              )
+            );
+          }catch(e:Dynamic){
+            __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
+          } 
+      },
+      Headers.fromJsHeaders(self.headers),
+      [ { message : self.statusText } ]      
+    );
+  }
+  #end
   #if hxnodejs
   @:from static public function fromNodeFetchResponse(self:node_fetch.Response):Response<Pledge<Dynamic,StxHttpClientFailure>>{
     return make(
@@ -31,9 +63,9 @@ typedef ResponseDef<T> = {
               err -> switch(__.tracer()(err.data)){
                 case Some(ERR(str)) :
                   var match = Chars.lift(str.toString()).starts_with("FetchError:");
-                  trace('"$str" $match');
+                  //trace('"$str" $match');
                   return if (str.toString().startsWith("FetchError: invalid json")){
-                    trace("JERE");
+                    //trace("JERE");
                     __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
                   }else{
                     __.reject(err);

@@ -31,7 +31,30 @@ package stx.http.client;
           headers : headers
       }:Request)
     );
+  }
+  #if js
+  public function toJsRequest():js.html.Request{
+    var headers = new haxe.DynamicAccess();
+      for(i in __.option(this.headers).defv(new Headers())){
+        headers.set(i.fst().toString(),i.snd());
+      }
+      return switch(this.method){
+        case POST : 
+          new js.html.Request(this.url,
+          {
+            body    : Json.stringify(this.body),
+            headers : headers,
+            method  : this.method
+          });
+        default : 
+          new js.html.Request(this.url,
+          {
+            headers : headers,
+            method  : this.method
+          });
+      }
   }  
+  #end
   #if hxnodejs
     @:to public function toNodeFetchRequest(){
       var headers = new node_fetch.Headers();

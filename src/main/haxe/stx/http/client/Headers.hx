@@ -7,6 +7,7 @@ typedef HeadersDef = Array<Tup2<HeaderId,String>>;
   static public function unit(){ return lift([]); }
   static public function lift(self:HeadersDef):Headers return new Headers(self);
 
+  #if hxnodejs
   @:to public function toNodeFetchHeaders(){
     var next = new node_fetch.Headers();
     for(tp in this){
@@ -16,6 +17,19 @@ typedef HeadersDef = Array<Tup2<HeaderId,String>>;
     }
     return next;
   }
+  #end
+  
+  #if js
+    @:from static public function fromJsHeaders(self:js.html.Headers){
+      var res = [];
+      self.forEach(
+        (value,name) -> {
+          res.push(tuple2(cast name,value));
+        }
+      );
+      return lift(res);
+    }
+  #end
   #if hxnodejs
     @:from static public function fromNodeFetchHeaders(self:node_fetch.Headers){
       var res = [];
