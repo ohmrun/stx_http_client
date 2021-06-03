@@ -16,15 +16,17 @@ typedef HeadersDef = Array<Tup2<HeaderId,String>>;
     }
     return next;
   }
-  @:from static public function fromNodeFetchHeaders(self:node_fetch.Headers){
-    var res = [];
-    self.forEach(
-      (value,name) -> {
-        res.push(tuple2(cast name,value));
-      }
-    );
-    return lift(res);
-  }
+  #if hxnodejs
+    @:from static public function fromNodeFetchHeaders(self:node_fetch.Headers){
+      var res = [];
+      self.forEach(
+        (value,name) -> {
+          res.push(tuple2(cast name,value));
+        }
+      );
+      return lift(res);
+    }
+  #end
   public function prj():HeadersDef return this;
   private var self(get,never):Headers;
   private function get_self():Headers return lift(this);

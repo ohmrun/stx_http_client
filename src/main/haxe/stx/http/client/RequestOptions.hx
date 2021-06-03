@@ -1,11 +1,13 @@
 package stx.http.client;
 @:using(stx.http.client.RequestOptions.RequestOptionsLift)
 @:forward abstract RequestOptions(RequestOptionsDef) from RequestOptionsDef{
-  @:to public function toRequestInit():RequestInit{
-    return {
-      headers : this.headers.toNodeFetchHeaders()
-    };
-  }
+  #if hxnodejs
+    @:to public function toRequestInit():RequestInit{
+      return {
+        headers : this.headers.toNodeFetchHeaders()
+      };
+    }
+  #end
 }
 class RequestOptionsLift{
   static public function fill(self:RequestOptions,url:String,body:Content<Dynamic>,method : HttpMethod = GET):stx.http.client.Request{

@@ -20,6 +20,7 @@ typedef ResponseDef<T> = {
       messages  : __.option(messages).def(() -> [])
     });
   }
+  #if hxnodejs
   @:from static public function fromNodeFetchResponse(self:node_fetch.Response):Response<Pledge<Dynamic,StxHttpClientFailure>>{
     return make(
       Math.round(self.status),
@@ -45,6 +46,7 @@ typedef ResponseDef<T> = {
       [ { message : self.statusText } ]
     );
   }
+  #end
   public function prj():ResponseDef<T> return this;
   private var self(get,never):Response<T>;
   private function get_self():Response<T> return lift(this);

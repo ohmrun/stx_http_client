@@ -5,16 +5,20 @@
     ],
     "-cp" : "src/main/haxe",
     "-lib" : [
+      "http-status",
       "tink_core",
-      "hxnodejs",
       "stx_pico",
       "stx_nano",
-      "stx_log",
-      "stx_nodejs"
+      "stx_log"
     ],
     "node" : {
+      "-lib"  : ["hxnodejs","stx_nodejs"],
       "-main" : "Main",
-      "-js"   : "build/main.js"
+      "-js"   : "build/node/main.js"
+    },
+    "js" : {
+      "-main" : "Main",
+      "-js"   : "build/html/main.js" 
     }
   },
   "run" : {

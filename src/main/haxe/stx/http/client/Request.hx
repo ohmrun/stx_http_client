@@ -31,27 +31,28 @@ package stx.http.client;
       }:Request)
     );
   }  
-  @:to public function toNodeFetchRequest(){
-    var headers = new node_fetch.Headers();
-    for(i in __.option(this.headers).defv(new Headers())){
-      headers.set(i.fst().toString(),i.snd());
+  #if hxnodejs
+    @:to public function toNodeFetchRequest(){
+      var headers = new node_fetch.Headers();
+      for(i in __.option(this.headers).defv(new Headers())){
+        headers.set(i.fst().toString(),i.snd());
+      }
+      return switch(this.method){
+        case POST : return new node_fetch.Request({ href : this.url },
+          ({
+            body    : Json.stringify(this.body),
+            headers : headers,
+            method  : this.method
+          }:node_fetch.RequestInit));
+        default : 
+          new node_fetch.Request({ href : this.url },
+          ({
+            headers : headers,
+            method  : this.method
+          }:node_fetch.RequestInit));
+      }
     }
-    return switch(this.method){
-      case POST : return new node_fetch.Request({ href : this.url },
-        ({
-          body    : Json.stringify(this.body),
-          headers : headers,
-          method  : this.method
-        }:node_fetch.RequestInit));
-      default : 
-        new node_fetch.Request({ href : this.url },
-        ({
-          headers : headers,
-          method  : this.method
-        }:node_fetch.RequestInit));
-    }
-  }
-  
+  #end
   public function copy(?method:HttpMethod,?url:String,?headers:Headers,?body:Dynamic){
     return make(
       __.option(method).defv(this.method),
