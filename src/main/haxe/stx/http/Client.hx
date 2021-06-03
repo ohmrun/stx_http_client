@@ -22,7 +22,7 @@ typedef RequestOptionsCtrApi                    = stx.http.client.RequestOptions
 typedef Response<T>                             = stx.http.client.Response<T>;
 typedef ResponseMessage                         = stx.http.client.ResponseMessage;
 typedef ResponseMessageDef                      = stx.http.client.ResponseMessage.ResponseMessageDef;
-
+typedef StxHttpClientFailure                    = stx.failure.StxHttpClientFailure;
 
 class Client{
   static public function client(wildcard:Wildcard){

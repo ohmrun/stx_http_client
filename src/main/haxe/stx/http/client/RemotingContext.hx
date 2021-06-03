@@ -24,7 +24,7 @@ class RemotingContext<T,E>{
       ),
       () -> Defect.unit()//TODO
     );
-    var error_error   = internal.error.extract(response,value);
+    var error_error   = internal.error.extract(response);
 
     return value_error.concat(error_error);
   }
