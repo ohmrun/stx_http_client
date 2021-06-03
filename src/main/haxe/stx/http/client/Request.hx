@@ -1,9 +1,10 @@
 package stx.http.client;
 
 @:publicFields @:structInit class RequestCls{
-  final url                   : String;
+  
   final method                : HttpMethod;
-
+  final url                   : String;
+  
   final headers               : Headers;
   
   @:optional final body       : Content<Dynamic>;  
