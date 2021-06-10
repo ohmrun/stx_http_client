@@ -11,7 +11,7 @@ enum abstract HeaderId(String){
   private function new(self){
     this = self;
   }
-  public function fromString(self:String):HeaderId{
+  static public function fromString(self:String):HeaderId{
     return new HeaderId(self);
   }
 }
