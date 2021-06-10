@@ -19,6 +19,10 @@
     "js" : {
       "-main" : "Main",
       "-js"   : "build/html/main.js" 
+    },
+    "neko" : {
+      "-main" : "Main",
+      "-neko" : "build/neko/neko.n"
     }
   },
   "run" : {
