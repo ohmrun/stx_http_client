@@ -7,6 +7,13 @@ typedef HeadersDef = Array<Tup2<HeaderId,String>>;
   static public function unit(){ return lift([]); }
   static public function lift(self:HeadersDef):Headers return new Headers(self);
 
+  @:from static public function fromStringMap(self:haxe.ds.Map<HeaderId,String>){
+    var arr = [];
+    for( key => val in self){
+    arr.push(tuple2(key,val));
+    }
+    return lift(arr);
+  }
   #if hxnodejs
   @:to public function toNodeFetchHeaders(){
     var next = new node_fetch.Headers();
