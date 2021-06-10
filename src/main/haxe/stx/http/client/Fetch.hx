@@ -1,18 +1,14 @@
 package stx.http.client;
 
-class Fetch{
-  #if hxnodejs
-  static public function apply<T,E>(extractor:RemotingContextExtractorDef<T,E>,req:Request):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
-    var freq = req.toNodeFetchRequest();
-    return node_fetch.Fetch.call(freq).toPledge().flat_map(
-      (res:node_fetch.Response) -> new RemotingContextCtr().pull0(extractor,req,res)
-    );
+abstract class Fetch<C:FetchConfigDef,P,R,E> implements ClientApi<P,R,E> extends Configured<C>{
+
+  public final extractor : RemotingContextExtractor<R,E>;
+  
+  public function new(config,extractor){
+    super(config);
+    this.extractor = extractor;
   }
-  #elseif js
-  static public function apply<T,E>(extractor:RemotingContextExtractorDef<T,E>,req:Request):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
-    return js.Lib.global.fetch(req.toJsRequest()).toPledge().flat_map(
-      (res:js.html.Response) -> new RemotingContextCtr().pull0(extractor,req,res)
-    );
+  public function request(method:HttpMethod,path:String,headers:Headers,body:Option<P>):Request{
+    return Request.make(method,'${this.config.base}$path',this.config.options.headers.concat(headers),body.defv(null));
   }
-  #end
 }

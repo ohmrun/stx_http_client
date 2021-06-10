@@ -1,6 +1,41 @@
 package stx.http.client;
 
-class RemotingContext<T,E>{
+import stx.http.client.remoting_context.term.Unit;
+import stx.http.client.remoting_context.term.FlatMap;
+import stx.http.client.remoting_context.term.Map;
+
+interface RemotingContextApi<T,E>{
+  public var value(get,null)          : Option<T>;
+  public function get_value():Option<T>;
+  public var error(get,null)          : Defect<E>;
+  public function get_error():Defect<E>; 
+
+  public function asRemotingContextDef():RemotingContextDef<T,E>;
+  public function asRemotingContext():RemotingContext<T,E>;
+}
+typedef RemotingContextDef<T,E> = {
+  var value(get,null)          : Option<T>;
+  function get_value():Option<T>;
+  var error(get,null)          : Defect<E>;
+  function get_error():Defect<E>;
+  
+  public function asRemotingContextDef():RemotingContextDef<T,E>;
+  public function asRemotingContext():RemotingContext<T,E>;
+}
+abstract class RemotingContextAbs<T,E> implements RemotingContextApi<T,E>{
+  public var value(get,null)          :  Option<T>;
+  abstract public function get_value():  Option<T>;
+  public var error(get,null)          :  Defect<E>;
+  abstract public function get_error():  Defect<E>; 
+
+  public function asRemotingContextDef():RemotingContextDef<T,E>{
+    return this;
+  }
+  public function asRemotingContext():RemotingContext<T,E>{
+    return this;
+  }
+}
+class RemotingContextCls<T,E> implements RemotingContextApi<T,E> extends RemotingContextAbs<T,E>{
   public function new(internal,request,response,extract){
     this.internal   = internal;
     this.request    = request;
@@ -14,7 +49,6 @@ class RemotingContext<T,E>{
 
   public final internal  : RemotingContextExtractorDef<T,E>;
 
-  public var error(get,null) : Defect<E>;
   public function get_error(){
     var payload       = try_get_payload();
     var value_error   = payload.flat_map(internal.value.extract).fold(
@@ -29,7 +63,6 @@ class RemotingContext<T,E>{
     return value_error.concat(error_error);
   }
 
-  public var value(get,null) : Option<T>;
   public function get_value() : Option<T>{
     return try_get_payload().flat_map(internal.value.extract).fold(
       res -> res.fold(
@@ -45,5 +78,31 @@ class RemotingContext<T,E>{
     }catch(e:Dynamic){  
       return stx.Option.unit();
     }
+  }
+}
+
+@:using(stx.http.client.RemotingContext.RemotingContextLift)
+@:forward abstract RemotingContext<T,E>(RemotingContextDef<T,E>) from RemotingContextDef<T,E> to RemotingContextDef<T,E>{
+  static public var _(default,never) = RemotingContextLift;
+  public function new(self) this = self;
+  static public function lift<T,E>(self:RemotingContextDef<T,E>):RemotingContext<T,E> return new RemotingContext(self);
+
+  public function prj():RemotingContextDef<T,E> return this;
+  private var self(get,never):RemotingContext<T,E>;
+  private function get_self():RemotingContext<T,E> return lift(this);
+
+  @:from static public function fromRemotingContextCls<T,E>(self:RemotingContextCls<T,E>){
+    return lift(self.asRemotingContextDef());
+  }
+  @:from static public function fromRemotingContextApi<T,E>(self:RemotingContextApi<T,E>){
+    return lift(self.asRemotingContextDef());
+  }
+}
+class RemotingContextLift{
+  static public function flat_map<P,Pi,E>(self:RemotingContextDef<P,E>,fn:P->RemotingContext<Pi,E>):RemotingContext<Pi,E>{
+    return new FlatMap(self,fn).asRemotingContextDef();
+  }
+  static public function map<P,Pi,E>(self:RemotingContextDef<P,E>,fn:P->Pi):RemotingContext<Pi,E>{
+    return new Map(self,fn).asRemotingContextDef();
   }
 }

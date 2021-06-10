@@ -7,14 +7,14 @@ class RemotingContextCtr extends Clazz{
     function rectifier(err:Err<StxHttpClientFailure>):Res<RemotingContext<T,E>,StxHttpClientFailure>{
       return switch(err.data){
         case Some(ERR_OF(E_HttpClient_CantDecode("json")))  : 
-          __.accept(new RemotingContext(extractor,req,res,null));
+          __.accept(new RemotingContextCls(extractor,req,res,null).asRemotingContext());
         default                                             : 
           __.reject(err);
       }
     }
     return res.decode().fold(
       pledge   -> pledge.map(
-        (dyn:Dyn) -> new RemotingContext(extractor,req,res,dyn)
+        (dyn:Dyn) -> new RemotingContextCls(extractor,req,res,dyn).asRemotingContext()
       ).rectify(rectifier),
       rectifier.fn().then(Pledge.make)  
     );

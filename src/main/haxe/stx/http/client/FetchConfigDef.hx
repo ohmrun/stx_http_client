@@ -1,6 +1,6 @@
 package stx.http.client;
 
-typedef FetchModelConfigDef = { 
+typedef FetchConfigDef = { 
   public final base                 : String;
   public final options              : RequestOptions;
 }
