@@ -1,5 +1,6 @@
 package stx.http.client;
 
+@:using(stx.http.client.RemotingContextExtractorLift)
 @:forward abstract RemotingContextExtractor<T,E>(RemotingContextExtractorDef<T,E>) from RemotingContextExtractorDef<T,E> to RemotingContextExtractorDef<T,E>{
   public function new(self) this = self;
   static public function lift<T,E>(self:RemotingContextExtractorDef<T,E>):RemotingContextExtractor<T,E> return new RemotingContextExtractor(self);
@@ -19,7 +20,15 @@ package stx.http.client;
       }:RemotingContextExtractorDef<Dynamic,E>
     );
   }
-  public function adjust<Ti>(fn:T->Outcome<Ti,Defect<E>>):RemotingContextExtractor<Ti,E>{
+}
+class RemotingContextExtractorLift{
+  static public function map<T,Ti,E>(self:RemotingContextExtractor<T,E>,fn:T->Ti){
+    return adjust(
+      self,
+      (t:T) -> __.accept(fn(t))
+    );
+  }
+  static public function adjust<T,Ti,E>(self:RemotingContextExtractor<T,E>,fn:T->Outcome<Ti,Defect<E>>):RemotingContextExtractor<Ti,E>{
     return lift({
       value : {
         extract : (dyn:Dynamic) -> this.value.extract(dyn).map( oc -> oc.flat_map(fn) )
