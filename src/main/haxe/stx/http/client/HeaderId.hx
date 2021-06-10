@@ -8,4 +8,10 @@ enum abstract HeaderId(String){
   public function toString(){
     return this;
   }
+  private function new(self){
+    this = self;
+  }
+  public function fromString(self:String):HeaderId{
+    return new HeaderId(self);
+  }
 }

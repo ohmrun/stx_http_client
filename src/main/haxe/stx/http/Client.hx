@@ -27,6 +27,7 @@ typedef Response<T>                             = stx.http.client.Response<T>;
 typedef ResponseMessage                         = stx.http.client.ResponseMessage;
 typedef ResponseMessageDef                      = stx.http.client.ResponseMessage.ResponseMessageDef;
 typedef StxHttpClientFailure                    = stx.failure.StxHttpClientFailure;
+typedef HeaderId                                = stx.http.client.HeaderId;
 
 class ClientAccess{
   static public function client(wildcard:Wildcard){
