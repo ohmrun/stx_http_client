@@ -36,17 +36,17 @@ class ClientAccess{
 }
 
 interface ClientApi<P,R,E>{
-  public function apply(p:P):Pledge<RemotingContext<P,E>,StxHttpClientFailure>;
+  public function apply(p:P):Pledge<RemotingContext<R,E>,StxHttpClientFailure>;
   public function asClientDef():ClientDef<P,R,E>;
 }
 abstract class ClientCls<P,R,E> implements ClientApi<P,R,E>{
-  abstract public function apply(p:P):Pledge<RemotingContext<P,E>,StxHttpClientFailure>;
+  abstract public function apply(p:P):Pledge<RemotingContext<R,E>,StxHttpClientFailure>;
   public function asClientDef():ClientDef<P,R,E>{
     return this;
   }
 }
 typedef ClientDef<P,R,E> = {
-  public function apply(p:P):Pledge<RemotingContext<P,E>,StxHttpClientFailure>;
+  public function apply(p:P):Pledge<RemotingContext<R,E>,StxHttpClientFailure>;
   public function asClientDef():ClientDef<P,R,E>;
 }
 @:using(stx.http.Client.ClientLift)
