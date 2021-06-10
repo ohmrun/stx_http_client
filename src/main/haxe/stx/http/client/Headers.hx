@@ -7,10 +7,17 @@ typedef HeadersDef = Array<Tup2<HeaderId,String>>;
   static public function unit(){ return lift([]); }
   static public function lift(self:HeadersDef):Headers return new Headers(self);
 
-  @:from static public function fromStringMap(self:haxe.ds.Map<HeaderId,String>){
+  @:from static public function fromHeaderIdMap(self:haxe.ds.Map<HeaderId,String>){
     var arr = [];
     for( key => val in self){
     arr.push(tuple2(key,val));
+    }
+    return lift(arr);
+  }
+  @:from static public function fromHeaderIdCtrMap(self:haxe.ds.Map<{ toHeaderId : Void -> HeaderId } ,String>){
+    var arr = [];
+    for( key => val in self){
+    arr.push(tuple2(key.toHeaderId(),val));
     }
     return lift(arr);
   }
