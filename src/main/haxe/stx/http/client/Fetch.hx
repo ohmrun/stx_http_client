@@ -11,4 +11,7 @@ abstract class Fetch<C:FetchConfigDef,P,R,E> implements ClientApi<P,R,E> extends
   public function request(method:HttpMethod,path:String,headers:Headers,body:Option<P>):Request{
     return Request.make(method,'${this.config.base}$path',this.config.options.headers.concat(headers),body.defv(null));
   }
+  public function asClientDef():ClienrDef<P,R,E>{
+    return this;
+  }
 }
