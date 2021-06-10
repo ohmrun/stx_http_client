@@ -1,4 +1,9 @@
 package stx.http.client;
+
+#if hxnodejs
+  import node_fetch.RequestInit;
+#end
+
 @:using(stx.http.client.RequestOptions.RequestOptionsLift)
 @:forward abstract RequestOptions(RequestOptionsDef) from RequestOptionsDef{
   #if hxnodejs

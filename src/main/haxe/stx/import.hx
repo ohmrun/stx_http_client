@@ -11,7 +11,3 @@ using stx.Log;
 using stx.Fn;
 
 import stx.failure.StxHttpClientFailure;
-
-#if hxnodejs
-  import node_fetch.RequestInit;
-#end
