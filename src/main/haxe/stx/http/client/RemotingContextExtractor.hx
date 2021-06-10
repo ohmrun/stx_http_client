@@ -25,16 +25,16 @@ class RemotingContextExtractorLift{
   static public function map<T,Ti,E>(self:RemotingContextExtractor<T,E>,fn:T->Ti){
     return adjust(
       self,
-      (t:T) -> __.accept(fn(t))
+      (t:T) -> __.success(fn(t))
     );
   }
   static public function adjust<T,Ti,E>(self:RemotingContextExtractor<T,E>,fn:T->Outcome<Ti,Defect<E>>):RemotingContextExtractor<Ti,E>{
-    return lift({
+    return RemotingContextExtractor.lift({
       value : {
-        extract : (dyn:Dynamic) -> this.value.extract(dyn).map( oc -> oc.flat_map(fn) )
+        extract : (dyn:Dynamic) -> self.value.extract(dyn).map( oc -> oc.flat_map(fn) )
       },
       error : {
-        extract : this.error.extract
+        extract : self.error.extract
       }
     });
   }
