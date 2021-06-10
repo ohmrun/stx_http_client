@@ -1,6 +1,6 @@
 package stx.http.client;
 
-@:using(stx.http.client.RemotingContextExtractorLift)
+@:using(stx.http.client.RemotingContextExtractor.RemotingContextExtractorLift)
 @:forward abstract RemotingContextExtractor<T,E>(RemotingContextExtractorDef<T,E>) from RemotingContextExtractorDef<T,E> to RemotingContextExtractorDef<T,E>{
   public function new(self) this = self;
   static public function lift<T,E>(self:RemotingContextExtractorDef<T,E>):RemotingContextExtractor<T,E> return new RemotingContextExtractor(self);
