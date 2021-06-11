@@ -68,4 +68,5 @@ typedef HeadersDef = Array<Tup2<HeaderId,String>>;
   public function concat(rhs:Headers){
     return lift(this.concat(rhs.toArray()));
   }
+  //public function get()
 }
