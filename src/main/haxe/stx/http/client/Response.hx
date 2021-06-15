@@ -5,8 +5,7 @@ typedef ResponseDef<T> = {
   function decode() : Res<T,StxHttpClientFailure>;
 
   final headers     : Headers;
-  final messages    : Array<ResponseMessage>;
-  
+  final messages    : Array<ResponseMessage>;  
 }
 @:forward abstract Response<T>(ResponseDef<T>) from ResponseDef<T> to ResponseDef<T>{
   public function new(self) this = self;
