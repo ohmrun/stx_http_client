@@ -16,7 +16,7 @@ class Module extends Clazz{
   }
   #elseif js
   public function fetch<T,E>(extractor:RemotingContextExtractorDef<T,E>,req:Request):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
-    return js.Lib.global.fetch(req.toJsRequest()).toPledge().flat_map(
+    return (js.Lib.global.fetch(req.toJsRequest()):js.lib.Promise<js.html.Response>).toPledge().flat_map(
       (res:js.html.Response) -> new RemotingContextCtr().pull0(extractor,req,res)
     );
   }
