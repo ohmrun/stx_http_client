@@ -1,6 +1,9 @@
 package stx.http.client;
 
 class Module extends Clazz{
+  public function extractor<E>():RemotingContextExtractor<Dynamic,E>{
+    return RemotingContextExtractor.unit();
+  }
   public function ctx<T>(ext,req,res){
     return new stx.http.client.RemotingContextCtr().pull0(ext,req,res);
   }

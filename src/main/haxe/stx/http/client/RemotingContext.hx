@@ -97,6 +97,18 @@ class RemotingContextCls<T,E> implements RemotingContextApi<T,E> extends Remotin
   @:from static public function fromRemotingContextApi<T,E>(self:RemotingContextApi<T,E>){
     return lift(self.asRemotingContextDef());
   }
+  public function outcome(){
+    return this.error.is_defined().if_else(
+      ()  ->  __.failure(this.error),
+      ()  ->  __.success(this.value)
+    );
+  }
+  public function res(){
+    return this.error.is_defined().if_else(
+      ()  ->  __.reject(this.error.toErr()),
+      ()  ->  __.accept(this.value)
+    );
+  }
 }
 class RemotingContextLift{
   static public function flat_map<P,Pi,E>(self:RemotingContextDef<P,E>,fn:P->RemotingContext<Pi,E>):RemotingContext<Pi,E>{

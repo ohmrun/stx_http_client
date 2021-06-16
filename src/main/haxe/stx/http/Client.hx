@@ -2,7 +2,7 @@ package stx.http;
 
 typedef Configured<T:FetchConfigDef>            = stx.http.client.Configured<T>;
 typedef Content<T>                              = stx.http.client.Content<T>;
-typedef Fetch<C:FetchConfigDef,P,R,E>           = stx.http.client.Fetch<C,P,R,E>;
+typedef Fetch<C:FetchConfigDef>                 = stx.http.client.Fetch<C>;
 typedef FetchConfigDef                          = stx.http.client.FetchConfigDef;
 typedef Headers                                 = stx.http.client.Headers;
 typedef HeadersCtr                              = stx.http.client.HeadersCtr;
