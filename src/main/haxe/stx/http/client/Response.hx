@@ -5,13 +5,13 @@ typedef ResponseDef<T> = {
   function decode() : Res<T,StxHttpClientFailure>;
 
   final headers     : Headers;
-  final messages    : Array<ResponseMessage>;  
+  final messages    : Cluster<ResponseMessage>;  
 }
 @:forward abstract Response<T>(ResponseDef<T>) from ResponseDef<T> to ResponseDef<T>{
   public function new(self) this = self;
   static public function lift<T>(self:ResponseDef<T>):Response<T> return new Response(self);
 
-  static public function make<T>(code:HttpStatusCode,decode:Void->Res<T,StxHttpClientFailure>,?headers:Headers,?messages:Array<ResponseMessage>){
+  static public function make<T>(code:HttpStatusCode,decode:Void->Res<T,StxHttpClientFailure>,?headers:Headers,?messages:Cluster<ResponseMessage>){
     return lift({
       code      : code,
       decode    : decode,

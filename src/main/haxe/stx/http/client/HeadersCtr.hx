@@ -13,10 +13,10 @@ class HeadersCtr extends Clazz implements HeadersCtrApi{
   public function json():Headers{
     return unit().snoc(tuple2(HeaderId.ContentType,"application/json"));
   }
-  public function conf(data:Array<Couple<HeaderId,String>>):Headers{
+  public function conf(data:Cluster<Couple<HeaderId,String>>):Headers{
     var headers = unit();
     for(v in data){
-      headers.push(tuple2(v.fst(),v.snd()));
+      headers = headers.cons(tuple2(v.fst(),v.snd()));
     }
     return headers;
   }
