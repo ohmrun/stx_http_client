@@ -1,6 +1,6 @@
 package stx.http.client;
 
-typedef HeadersDef = Array<Tup2<HeaderId,String>>;
+typedef HeadersDef = Cluster<Tup2<HeaderId,String>>;
 
 @:forward abstract Headers(HeadersDef) from HeadersDef{
   public function new(?self) this = __.option(self).defv([]);
@@ -62,11 +62,11 @@ typedef HeadersDef = Array<Tup2<HeaderId,String>>;
   public function copy():Headers{
     return this.copy();
   }
-  public function toArray(){
+  public function toCluster(){
     return this;
   }
   public function concat(rhs:Headers){
-    return lift(this.concat(rhs.toArray()));
+    return lift(this.concat(rhs.toCluster()));
   }
   //public function get()
 }

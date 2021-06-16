@@ -46,7 +46,7 @@ class Haxe{
               code      : int,
               decode    : decode,
               messages  : [],
-              headers   : []
+              headers   : Headers.unit()
             }:Response<Dynamic>)
           ));
         default : 
@@ -70,7 +70,7 @@ class Haxe{
       case POST : true;
       default   : false;
     }
-    for(header in __.option(request.headers).defv([])){
+    for(header in __.option(request.headers).defv(Headers.unit())){
       delegate.setHeader(header.fst().toString(),header.snd());
     }
     delegate.request(is_post);
