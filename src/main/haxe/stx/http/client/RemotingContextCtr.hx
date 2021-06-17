@@ -12,7 +12,10 @@ class RemotingContextCtr extends Clazz{
     }
     return res.decode().fold(
       pledge   -> pledge.map(
-        (dyn:Dyn) -> new RemotingContextCls(extractor,req,res,dyn).asRemotingContext()
+        (dyn:Dyn) -> {
+          //trace('here: $dyn');
+          return new RemotingContextCls(extractor,req,res,dyn).asRemotingContext();
+        }
       ).rectify(rectifier),
       rectifier.fn().then(Pledge.make)  
     );

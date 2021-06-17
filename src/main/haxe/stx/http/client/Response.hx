@@ -47,7 +47,7 @@ typedef ResponseDef<T> = {
           } 
       },
       Headers.fromJsHeaders(self.headers),
-      [ { message : self.statusText } ]      
+      Cluster.unit().snoc(({ message : self.statusText }:ResponseMessageDef))      
     );
   }
   #end

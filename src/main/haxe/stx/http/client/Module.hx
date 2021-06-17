@@ -16,12 +16,28 @@ class Module extends Clazz{
   }
   #elseif js
   public function fetch<T,E>(extractor:RemotingContextExtractorDef<T,E>,req:Request):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
-    return (js.Lib.global.fetch(req.toJsRequest()):js.lib.Promise<js.html.Response>).toPledge().flat_map(
-      (res:js.html.Response) -> new RemotingContextCtr().pull0(extractor,req,res)
-    );
+    return (js.Lib.global.fetch(req.toJsRequest()):js.lib.Promise<js.html.Response>)
+      .then(
+        (x) -> {
+          //trace(x);
+          return x;
+        }
+      ).toPledge()
+       .errate(
+        (e) -> {
+          //trace(e);
+          return e;
+        }
+       ).flat_map(
+        (res:js.html.Response) -> {
+          //trace(res);
+          return new RemotingContextCtr().pull0(extractor,req,res);
+        }
+      );
   }
   #else
   public function fetch<T,E>(extractor:RemotingContextExtractorDef<T,E>,req:Request):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
+    trace("default");
     return stx.http.client.fetch.term.Haxe.fetch(req).map(
       (res:Response<Dynamic>) -> new RemotingContextCtr().pull(extractor,req,res)
     );
