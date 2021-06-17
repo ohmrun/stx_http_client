@@ -47,7 +47,7 @@ typedef ResponseDef<T> = {
           } 
       },
       Headers.fromJsHeaders(self.headers),
-      Cluster.unit().snoc(({ message : self.statusText }:ResponseMessageDef))      
+      Cluster.unit().snoc(({ message : self.statusText }:ResponseMessage))      
     );
   }
   #end
@@ -79,7 +79,7 @@ typedef ResponseDef<T> = {
         }
       },
       Headers.fromNodeFetchHeaders(self.headers),
-      [ { message : self.statusText } ]
+      Cluster.unit().snoc(({ message : self.statusText }:ResponseMessage))
     );
   }
   #end
