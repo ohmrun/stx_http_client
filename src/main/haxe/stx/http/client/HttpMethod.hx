@@ -6,7 +6,8 @@ enum abstract HttpMethod(String) to String{
   var HEAD;
   var DELETE;
   var PATCH;
-
+  var PUT;
+  
   public function equals(str:String){
     //trace('$str $this');
     return str == this;
