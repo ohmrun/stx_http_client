@@ -103,7 +103,7 @@ class RemotingContextCls<T,E> implements RemotingContextApi<T,E> extends Remotin
   private var self(get,never):RemotingContext<T,E>;
   private function get_self():RemotingContext<T,E> return lift(this);
 
-  @:noUsing static public function pure(extract:T){
+  @:noUsing static public function pure<T>(extract:T){
     return lift(new PureRemotingContextCls(extract));
   }
   @:from static public function fromRemotingContextCls<T,E>(self:RemotingContextCls<T,E>){
