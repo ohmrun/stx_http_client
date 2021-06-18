@@ -35,6 +35,18 @@ abstract class RemotingContextAbs<T,E> implements RemotingContextApi<T,E>{
     return this;
   }
 }
+class PureRemotingContextCls<T,E> extends RemotingContextAbs<T,E>{
+  final extract : T;
+  public function new(extract){
+    this.extract = extract;
+  }
+  public function get_value():Option<T>{
+    return __.option(extract);
+  }
+  public function get_error():Defect<E>{
+    return [];
+  }
+}
 class RemotingContextCls<T,E> implements RemotingContextApi<T,E> extends RemotingContextAbs<T,E>{
   public function new(internal,request,response,extract){
     this.internal   = internal;
@@ -91,6 +103,9 @@ class RemotingContextCls<T,E> implements RemotingContextApi<T,E> extends Remotin
   private var self(get,never):RemotingContext<T,E>;
   private function get_self():RemotingContext<T,E> return lift(this);
 
+  @:noUsing static public function pure(extract:T){
+    return lift(new PureRemotingContextCls(extract));
+  }
   @:from static public function fromRemotingContextCls<T,E>(self:RemotingContextCls<T,E>){
     return lift(self.asRemotingContextDef());
   }
