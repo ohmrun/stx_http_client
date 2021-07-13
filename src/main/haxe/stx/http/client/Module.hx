@@ -37,7 +37,7 @@ class Module extends Clazz{
   }
   #else
   public function fetch<T,E>(extractor:RemotingContextExtractorDef<T,E>,req:Request):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
-    trace("default");
+    __.log().trace("default");
     return stx.http.client.fetch.term.Haxe.fetch(req).map(
       (res:Response<Dynamic>) -> new RemotingContextCtr().pull(extractor,req,res)
     );
