@@ -6,7 +6,5 @@ class Configured<C:FetchConfigDef> extends Clazz{
   public function new(config){
     super();
     this.config = config;
-  }
-
-  
+  } 
 }
