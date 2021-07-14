@@ -68,5 +68,19 @@ typedef HeadersDef = Cluster<Tup2<HeaderId,String>>;
   public function concat(rhs:Headers){
     return lift(this.concat(rhs.toCluster()));
   }
+  public function set(key:HeaderId,val:String){
+    return this.snoc(tuple2(key,val));
+  }
+  public function plug(v:Tup2<HeaderId,String>){
+    return exists(v.fst()).if_else(
+      () -> lift(this),
+      () -> set(v.fst(),v.snd())
+    );
+  }
+  public function exists(key:HeaderId){
+    return this.any(
+      (x) -> x.fst() == key
+    );
+  }
   //public function get()
 }
