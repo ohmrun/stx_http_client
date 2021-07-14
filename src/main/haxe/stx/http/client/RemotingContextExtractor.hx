@@ -20,6 +20,17 @@ package stx.http.client;
       }:RemotingContextExtractorDef<Dynamic,E>
     );
   }
+  static public function unitI<T,E>():RemotingContextExtractor<T,E>{
+    return ({
+      value : ({
+        extract : (dyn:Dynamic) -> (__.option(__.success((dyn:T))):Option<Outcome<T,Defect<E>>>)
+      }:RemotingContextValueExtractorDef<T,E>),
+      error : ({
+          extract : (res:Response<Dynamic>) -> Defect.unit()
+        }:RemotingContextErrorExtractorDef<T,E>)
+      }:RemotingContextExtractorDef<T,E>
+    );
+  }
 }
 class RemotingContextExtractorLift{
   static public function map<T,Ti,E>(self:RemotingContextExtractor<T,E>,fn:T->Ti){

@@ -10,6 +10,6 @@ class Main{
     var req = Request.make(GET,url);
     var ext = RemotingContextExtractor.unit();
     
-    __.client().fetch(ext,req).handle(__.trace());
+    __.client().fetch(req).handle(__.trace());
   }
 }
