@@ -4,7 +4,7 @@ typedef HeadersDef = Cluster<Tup2<HeaderId,String>>;
 
 @:forward abstract Headers(HeadersDef) from HeadersDef{
   public function new(?self) this = __.option(self).defv(Cluster.unit());
-  static public function unit(){ return lift([]); }
+  static public function unit():Headers{ return lift([]); }
   static public function lift(self:HeadersDef):Headers return new Headers(self);
 
   @:from static public function fromHeaderIdMap(self:haxe.ds.Map<HeaderId,String>){
@@ -82,5 +82,4 @@ typedef HeadersDef = Cluster<Tup2<HeaderId,String>>;
       (x) -> x.fst() == key
     );
   }
-  //public function get()
 }

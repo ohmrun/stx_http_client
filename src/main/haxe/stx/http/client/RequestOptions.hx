@@ -16,11 +16,13 @@ package stx.http.client;
 }
 class RequestOptionsLift{
   static public function fill(self:RequestOptions,url:String,body:Content<Dynamic>,method : HttpMethod = GET):stx.http.client.Request{
-    return ({
-      url     : url,
-      headers : self.headers,
-      body    : body,
-      method  : method 
-    }:RequestCls);
+    return (
+      {
+        url     : url,
+        headers : self.headers,
+        body    : body,
+        method  : method 
+      } : RequestCls
+    );
   }
 }
