@@ -74,7 +74,7 @@ typedef HeadersDef = Cluster<Tup2<HeaderId,String>>;
   public function plug(v:Tup2<HeaderId,String>){
     return exists(v.fst()).if_else(
       () -> lift(this),
-      () -> set(v.fst(),v.snd())
+      () -> this.snoc(v)
     );
   }
   public function exists(key:HeaderId){

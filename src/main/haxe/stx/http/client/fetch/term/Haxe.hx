@@ -71,6 +71,7 @@ class Haxe{
       default   : false;
     }
     for(header in __.option(request.headers).defv(Headers.unit())){
+      __.log().debug(header);
       delegate.setHeader(header.fst().toString(),header.snd());
     }
     delegate.request(is_post);
