@@ -9,6 +9,7 @@ class Module extends Clazz{
   }
   #if hxnodejs
   public function fetch<T,E>(req:Request,?extractor:RemotingContextExtractor<T,E>):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
+    __.log().debug(_ -> _.show(req));
     __.option(extractor).def(
       () -> extractor = RemotingContextExtractor.unitI()
     );
@@ -19,6 +20,7 @@ class Module extends Clazz{
   }
   #elseif js
   public function fetch<T,E>(req:Request,?extractor:RemotingContextExtractor<T,E>):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
+    __.log().debug(_ -> _.show(req));
     __.option(extractor).def(
       () -> extractor = RemotingContextExtractor.unitI()
     );
@@ -43,7 +45,7 @@ class Module extends Clazz{
   }
   #else
   public function fetch<T,E>(req:Request,?extractor:RemotingContextExtractor<T,E>):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
-    __.log().trace("default");
+    __.log().debug(_ -> _.show(req));
     __.option(extractor).def(
       () -> extractor = RemotingContextExtractor.unitI()
     );
