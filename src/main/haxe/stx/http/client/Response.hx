@@ -2,7 +2,7 @@ package stx.http.client;
 
 typedef ResponseDef<T> = {
   final code        : HttpStatusCode;
-  function decode() : Res<T,StxHttpClientFailure>;
+  function decode() : Res<T,HttpClientFailure>;
 
   final headers     : Headers;
   final messages    : Cluster<ResponseMessage>;  
@@ -11,7 +11,7 @@ typedef ResponseDef<T> = {
   public function new(self) this = self;
   static public function lift<T>(self:ResponseDef<T>):Response<T> return new Response(self);
 
-  static public function make<T>(code:HttpStatusCode,decode:Void->Res<T,StxHttpClientFailure>,?headers:Headers,?messages:Cluster<ResponseMessage>){
+  static public function make<T>(code:HttpStatusCode,decode:Void->Res<T,HttpClientFailure>,?headers:Headers,?messages:Cluster<ResponseMessage>){
     return lift({
       code      : code,
       decode    : decode,
@@ -20,7 +20,7 @@ typedef ResponseDef<T> = {
     });
   }
   #if js
-  @:from static public function fromJsResponse(self:js.html.Response):Response<Pledge<Dynamic,StxHttpClientFailure>>{
+  @:from static public function fromJsResponse(self:js.html.Response):Response<Pledge<Dynamic,HttpClientFailure>>{
     return make(
       self.status,
       () -> {
@@ -52,7 +52,7 @@ typedef ResponseDef<T> = {
   }
   #end
   #if hxnodejs
-  @:from static public function fromNodeFetchResponse(self:node_fetch.Response):Response<Pledge<Dynamic,StxHttpClientFailure>>{
+  @:from static public function fromNodeFetchResponse(self:node_fetch.Response):Response<Pledge<Dynamic,HttpClientFailure>>{
     return make(
       Math.round(self.status),
       () -> {

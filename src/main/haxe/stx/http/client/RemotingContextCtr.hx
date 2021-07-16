@@ -1,8 +1,8 @@
 package stx.http.client;
 
 class RemotingContextCtr extends Clazz{
-  public function pull0<T,E>(extractor:RemotingContextExtractorDef<T,E>,req:Request,res:Response<Pledge<Dynamic,Dynamic>>):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
-    function rectifier(err:Err<StxHttpClientFailure>):Res<RemotingContext<T,E>,StxHttpClientFailure>{
+  public function pull0<T,E>(extractor:RemotingContextExtractorDef<T,E>,req:Request,res:Response<Pledge<Dynamic,Dynamic>>):Pledge<RemotingContext<T,E>,HttpClientFailure>{
+    function rectifier(err:Err<HttpClientFailure>):Res<RemotingContext<T,E>,HttpClientFailure>{
       return switch(err.data){
         case Some(ERR_OF(E_HttpClient_CantDecode("json")))  : 
           __.accept(new RemotingContextCls(extractor,req,res,null).asRemotingContext());

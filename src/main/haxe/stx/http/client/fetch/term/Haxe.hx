@@ -11,15 +11,15 @@ class Haxe{
   public function new(request:Request){
     this.request            = request;
   }
-  static public function fetch<T,E>(req:Request):Pledge<Response<Dynamic>,StxHttpClientFailure>{
+  static public function fetch<T,E>(req:Request):Pledge<Response<Dynamic>,HttpClientFailure>{
     var http = new Haxe(req);
     return http.reply();
   }
-  public function reply():Pledge<Response<Dynamic>,StxHttpClientFailure>{
+  public function reply():Pledge<Response<Dynamic>,HttpClientFailure>{
     final delegate  = new sys.Http(request.url);
     final complete  = Future.trigger();
     final stream    = Stream.make(
-      (cb:Chunk<HttpData,StxHttpClientFailure>->Void) ->{
+      (cb:Chunk<HttpData,HttpClientFailure>->Void) ->{
         delegate.onError   = (err:String)-> {
           cb(Val(HttpError(err)));
         } 

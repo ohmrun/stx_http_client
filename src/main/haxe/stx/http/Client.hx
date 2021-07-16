@@ -26,7 +26,7 @@ typedef RequestOptionsCtrApi                    = stx.http.client.RequestOptions
 typedef Response<T>                             = stx.http.client.Response<T>;
 typedef ResponseMessage                         = stx.http.client.ResponseMessage;
 typedef ResponseMessageDef                      = stx.http.client.ResponseMessage.ResponseMessageDef;
-typedef StxHttpClientFailure                    = stx.failure.StxHttpClientFailure;
+typedef HttpClientFailure                    = stx.fail.HttpClientFailure;
 typedef HeaderId                                = stx.http.client.HeaderId;
 typedef HttpMethod                              = stx.http.client.HttpMethod;
               
@@ -37,17 +37,17 @@ class ClientAccess{
 }
 
 interface ClientApi<P,R,E>{
-  public function apply(p:P):Pledge<RemotingContext<R,E>,StxHttpClientFailure>;
+  public function apply(p:P):Pledge<RemotingContext<R,E>,HttpClientFailure>;
   public function asClientDef():ClientDef<P,R,E>;
 }
 abstract class ClientCls<P,R,E> implements ClientApi<P,R,E>{
-  abstract public function apply(p:P):Pledge<RemotingContext<R,E>,StxHttpClientFailure>;
+  abstract public function apply(p:P):Pledge<RemotingContext<R,E>,HttpClientFailure>;
   public function asClientDef():ClientDef<P,R,E>{
     return this;
   }
 }
 typedef ClientDef<P,R,E> = {
-  public function apply(p:P):Pledge<RemotingContext<R,E>,StxHttpClientFailure>;
+  public function apply(p:P):Pledge<RemotingContext<R,E>,HttpClientFailure>;
   public function asClientDef():ClientDef<P,R,E>;
 }
 @:using(stx.http.Client.ClientLift)

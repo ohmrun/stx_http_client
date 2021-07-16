@@ -1,6 +1,6 @@
-package stx.failure;
+package stx.fail;
 
-enum StxHttpClientFailure{
+enum HttpClientFailure{
   E_HttpClient_Error(string:String);  
   E_HttpClient_CantDecode(type:String);
   E_HttpClient_PreflightUnautheticated;
