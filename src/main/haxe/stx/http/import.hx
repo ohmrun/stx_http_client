@@ -9,4 +9,4 @@ using stx.Nano;
 using stx.Log;
 using stx.Fn;
 
-import stx.failure.HttpClientFailure;
+import stx.fail.HttpClientFailure;
