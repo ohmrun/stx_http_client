@@ -8,7 +8,7 @@ class Module extends Clazz{
     return new stx.http.client.RemotingContextCtr().pull0(ext,req,res);
   }
   #if hxnodejs
-  public function fetch<T,E>(req:Request,?extractor:RemotingContextExtractor<T,E>):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
+  public function fetch<T,E>(req:Request,?extractor:RemotingContextExtractor<T,E>):Pledge<RemotingContext<T,E>,HttpClientFailure>{
     __.log().debug(_ -> _.show(req));
     __.option(extractor).def(
       () -> extractor = RemotingContextExtractor.unitI()
@@ -19,7 +19,7 @@ class Module extends Clazz{
     );
   }
   #elseif js
-  public function fetch<T,E>(req:Request,?extractor:RemotingContextExtractor<T,E>):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
+  public function fetch<T,E>(req:Request,?extractor:RemotingContextExtractor<T,E>):Pledge<RemotingContext<T,E>,HttpClientFailure>{
     __.log().debug(_ -> _.show(req));
     __.option(extractor).def(
       () -> extractor = RemotingContextExtractor.unitI()
@@ -44,13 +44,13 @@ class Module extends Clazz{
       );
   }
   #else
-  public function fetch<T,E>(req:Request,?extractor:RemotingContextExtractor<T,E>):Pledge<RemotingContext<T,E>,StxHttpClientFailure>{
+  public function fetch<T,E>(req:Request,?extractor:RemotingContextExtractor<T,E>):Pledge<RemotingContext<T,E>,HttpClientFailure>{
     __.log().debug(_ -> _.pure(req));
     __.option(extractor).def(
       () -> extractor = RemotingContextExtractor.unitI()
     );
     return stx.http.client.fetch.term.Haxe.fetch(req).adjust(
-      (res:Response<Res<Dynamic,StxHttpClientFailure>>) -> {
+      (res:Response<Res<Dynamic,HttpClientFailure>>) -> {
         trace(res.decode());
         return new RemotingContextCtr().pull(extractor,req,res);
       }

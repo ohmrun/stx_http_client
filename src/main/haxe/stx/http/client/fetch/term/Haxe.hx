@@ -11,16 +11,16 @@ class Haxe{
   public function new(request:Request){
     this.request            = request;
   }
-  static public function fetch<T,E>(req:Request):Pledge<Response<Res<Dynamic,StxHttpClientFailure>>,StxHttpClientFailure>{
+  static public function fetch<T,E>(req:Request):Pledge<Response<Res<Dynamic,HttpClientFailure>>,HttpClientFailure>{
     var http = new Haxe(req);
     return http.reply();
   }
-  public function reply():Pledge<Response<Res<Dynamic,StxHttpClientFailure>>,StxHttpClientFailure>{
+  public function reply():Pledge<Response<Res<Dynamic,HttpClientFailure>>,HttpClientFailure>{
     __.log().debug('fetch: ${request.headers}');
     final delegate  = new sys.Http(request.url);
-    final complete  : FutureTrigger<Res<Response<Res<Dynamic,StxHttpClientFailure>>,StxHttpClientFailure>> = Future.trigger();
+    final complete  : FutureTrigger<Res<Response<Res<Dynamic,HttpClientFailure>>,HttpClientFailure>> = Future.trigger();
     final stream    = Stream.make(
-      (cb:Chunk<HttpData,StxHttpClientFailure>->Void) ->{
+      (cb:Chunk<HttpData,HttpClientFailure>->Void) ->{
         delegate.onError   = (err:String)-> {
           cb(Val(HttpError(err)));
         } 
@@ -50,7 +50,7 @@ class Haxe{
               decode    : decode,
               messages  : [],
               headers   : Headers.unit()
-            }:Response<Res<Dynamic,StxHttpClientFailure>>)
+            }:Response<Res<Dynamic,HttpClientFailure>>)
           ));
         default : 
       }
