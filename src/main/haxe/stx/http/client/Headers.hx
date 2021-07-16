@@ -82,4 +82,11 @@ typedef HeadersDef = Cluster<Tup2<HeaderId,String>>;
       (x) -> x.fst() == key
     );
   }
+  @:to public function toString(){
+    return this.map(tp -> switch(tp) { case tuple2(x,y) : '$x => $y'; }).lfold1((n,m) -> '$m,$n');
+  }
+  @:arrayAccess
+  public function get(i:Int){
+    return this[i];
+  }
 }

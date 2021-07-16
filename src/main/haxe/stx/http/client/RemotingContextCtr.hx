@@ -20,8 +20,8 @@ class RemotingContextCtr extends Clazz{
       rectifier.fn().then(Pledge.make)  
     );
   }
-  public function pull<T,E>(extractor:RemotingContextExtractorDef<T,E>,req:Request,res:Response<Dynamic>):RemotingContext<T,E>{
+  public function pull<T,E>(extractor:RemotingContextExtractorDef<T,E>,req:Request,res:Response<Res<Dynamic,StxHttpClientFailure>>):Res<RemotingContext<T,E>,StxHttpClientFailure>{
     var data = res.decode();
-    return new RemotingContextCls(extractor,req,res,data).asRemotingContextDef();
+    return data.map(data -> new RemotingContextCls(extractor,req,res,data).asRemotingContextDef());
   }
 }

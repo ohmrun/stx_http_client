@@ -7,7 +7,8 @@ enum abstract HttpMethod(String) to String{
   var DELETE;
   var PATCH;
   var PUT;
-  
+  var LIST;
+    
   public function equals(str:String){
     //trace('$str $this');
     return str == this;

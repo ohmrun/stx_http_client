@@ -10,7 +10,7 @@ package stx.http.client;
   @:optional final body       : Content<Dynamic>;  
 
   public function toString(){
-    return Json.stringify(this," ");
+    return '$method $url $headers ${haxe.Json.stringify(body," ")}';
   }
 }
 @:forward abstract Request(RequestCls) from RequestCls to RequestCls{
