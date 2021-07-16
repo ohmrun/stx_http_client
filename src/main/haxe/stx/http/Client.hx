@@ -26,7 +26,7 @@ typedef RequestOptionsCtrApi                    = stx.http.client.RequestOptions
 typedef Response<T>                             = stx.http.client.Response<T>;
 typedef ResponseMessage                         = stx.http.client.ResponseMessage;
 typedef ResponseMessageDef                      = stx.http.client.ResponseMessage.ResponseMessageDef;
-typedef HttpClientFailure                    = stx.failure.HttpClientFailure;
+typedef HttpClientFailure                       = stx.fail.HttpClientFailure;
 typedef HeaderId                                = stx.http.client.HeaderId;
 typedef HttpMethod                              = stx.http.client.HttpMethod;
               

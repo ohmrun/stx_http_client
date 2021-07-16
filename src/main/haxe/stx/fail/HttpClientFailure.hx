@@ -1,4 +1,4 @@
-package stx.failure;
+package stx.fail;
 
 enum HttpClientFailure{
   E_HttpClient_Error(string:String);  
