@@ -50,7 +50,7 @@ class Module extends Clazz{
       () -> extractor = RemotingContextExtractor.unitI()
     );
     return stx.http.client.fetch.term.Haxe.fetch(req).adjust(
-      (res:Response<Res<Dynamic,StxHttpClientFailure>>) -> {
+      (res:Response<Res<Dynamic,HttpClientFailure>>) -> {
         trace(res.decode());
         return new RemotingContextCtr().pull(extractor,req,res);
       }
