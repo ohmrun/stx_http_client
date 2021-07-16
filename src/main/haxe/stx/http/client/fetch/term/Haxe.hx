@@ -16,17 +16,20 @@ class Haxe{
     return http.reply();
   }
   public function reply():Pledge<Response<Dynamic>,HttpClientFailure>{
+    __.log().debug('fetch: ${request.headers}');
     final delegate  = new sys.Http(request.url);
-    final complete  = Future.trigger();
+    final complete  : FutureTrigger<Res<Response<Res<Dynamic,StxHttpClientFailure>>,StxHttpClientFailure>> = Future.trigger();
     final stream    = Stream.make(
       (cb:Chunk<HttpData,HttpClientFailure>->Void) ->{
         delegate.onError   = (err:String)-> {
           cb(Val(HttpError(err)));
         } 
         delegate.onStatus  = (status:Int) -> {
+          __.log().debug(_ -> _.pure(status));
           cb(Val(HttpStatus(status)));
         }
         delegate.onData    = (data:String) -> {
+          __.log().debug(_ -> _.pure(data));
           cb(Val(HttpData(data)));
         }   
         return () -> {};
@@ -47,7 +50,7 @@ class Haxe{
               decode    : decode,
               messages  : [],
               headers   : Headers.unit()
-            }:Response<Dynamic>)
+            }:Response<Res<Dynamic,HttpClientFailure>>)
           ));
         default : 
       }
@@ -70,9 +73,16 @@ class Haxe{
       case POST : true;
       default   : false;
     }
+    
     for(header in __.option(request.headers).defv(Headers.unit())){
-      __.log().debug(header);
-      delegate.setHeader(header.fst().toString(),header.snd());
+      __.log().debug(_ -> _.pure(header));
+      delegate.addHeader(header.fst().toString(),header.snd());
+    }
+    if(is_post){
+      //TODO other forms of Content
+      var value = Json.stringify(request.body);
+      __.log().trace(value);
+      delegate.setPostBytes(haxe.io.Bytes.ofString(value));
     }
     delegate.request(is_post);
 

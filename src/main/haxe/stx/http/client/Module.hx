@@ -45,12 +45,15 @@ class Module extends Clazz{
   }
   #else
   public function fetch<T,E>(req:Request,?extractor:RemotingContextExtractor<T,E>):Pledge<RemotingContext<T,E>,HttpClientFailure>{
-    __.log().debug(_ -> _.show(req));
+    __.log().debug(_ -> _.pure(req));
     __.option(extractor).def(
       () -> extractor = RemotingContextExtractor.unitI()
     );
-    return stx.http.client.fetch.term.Haxe.fetch(req).map(
-      (res:Response<Dynamic>) -> new RemotingContextCtr().pull(extractor,req,res)
+    return stx.http.client.fetch.term.Haxe.fetch(req).adjust(
+      (res:Response<Res<Dynamic,StxHttpClientFailure>>) -> {
+        trace(res.decode());
+        return new RemotingContextCtr().pull(extractor,req,res);
+      }
     );
   }
   #end

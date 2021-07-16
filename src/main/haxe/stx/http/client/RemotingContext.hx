@@ -118,7 +118,7 @@ class RemotingContextCls<T,E> implements RemotingContextApi<T,E> extends Remotin
       ()  ->  __.success(this.value)
     );
   }
-  public function res(){
+  public function res():Res<Option<T>,E>{
     return this.error.is_defined().if_else(
       ()  ->  __.reject(this.error.toErr()),
       ()  ->  __.accept(this.value)

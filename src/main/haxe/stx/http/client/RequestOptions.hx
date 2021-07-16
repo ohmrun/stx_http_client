@@ -13,6 +13,15 @@ package stx.http.client;
       };
     }
   #end
+  public function copy(?headers,?agent):RequestOptions{
+    return {
+      headers : __.option(headers).defv(this.headers),
+      agent   : __.option(agent).defv(this.agent),
+    }
+  }
+  public function with_header(header:Tup2<HeaderId,String>){
+    return copy(this.headers.snoc(header));
+  }
 }
 class RequestOptionsLift{
   static public function fill(self:RequestOptions,url:String,body:Content<Dynamic>,method : HttpMethod = GET):stx.http.client.Request{
