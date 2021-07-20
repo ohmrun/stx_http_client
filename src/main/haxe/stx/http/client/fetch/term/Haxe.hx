@@ -41,7 +41,10 @@ class Haxe{
       switch([status,response]){
         case [Some(int),Some(data)] :
           final decode = switch(data){
-            case Left(str)    : () -> __.reject(__.fault().of(E_HttpClient_Error(str)));
+            case Left(str)    : () -> {
+              __.log().debug(_ -> _.pure(request));
+              return __.reject(__.fault().of(E_HttpClient_Error('$str at ${request.url}')));
+            }
             case Right(str)   : () -> __.accept(haxe.Json.parse(str)); 
           }
           complete.trigger(__.accept(
