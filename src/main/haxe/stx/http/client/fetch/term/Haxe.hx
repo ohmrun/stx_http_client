@@ -22,6 +22,7 @@ class Haxe{
     final stream    = Stream.make(
       (cb:Chunk<HttpData,HttpClientFailure>->Void) ->{
         delegate.onError   = (err:String)-> {
+          __.log().error(err);
           cb(Val(HttpError(err)));
         } 
         delegate.onStatus  = (status:Int) -> {
@@ -77,18 +78,21 @@ class Haxe{
       default   : false;
     }
     
+    __.log().crazy("headers to add");
     for(header in __.option(request.headers).defv(Headers.unit())){
       __.log().debug(_ -> _.pure(header));
       delegate.addHeader(header.fst().toString(),header.snd());
     }
+    __.log().crazy("headers added");
     if(is_post){
       //TODO other forms of Content
       var value = Json.stringify(request.body);
       __.log().trace(value);
       delegate.setPostBytes(haxe.io.Bytes.ofString(value));
     }
+    __.log().crazy('to request');
     delegate.request(is_post);
-
+    __.log().crazy('requested');
     return Pledge.lift(complete);
   }
 }
