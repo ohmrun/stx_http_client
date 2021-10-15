@@ -124,6 +124,15 @@ class RemotingContextCls<T,E> implements RemotingContextApi<T,E> extends Remotin
       ()  ->  __.accept(this.value)
     );
   }
+  public function chunk():Chunk<T,E>{
+    return this.error.is_defined().if_else(
+      () -> End(this.error.toErr()),
+      () -> this.value.fold(
+        ok -> Val(ok),
+        () -> Nil
+      )
+    );
+  }
 }
 class RemotingContextLift{
   static public function flat_map<P,Pi,E>(self:RemotingContextDef<P,E>,fn:P->RemotingContext<Pi,E>):RemotingContext<Pi,E>{

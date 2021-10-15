@@ -24,6 +24,10 @@
     "neko" : {
       "-main" : "Main",
       "-neko" : "build/neko/neko.n"
+    },
+    "interp" : {
+      "-main" : "Main",
+      "--interp" : true
     }
   },
   "run" : {

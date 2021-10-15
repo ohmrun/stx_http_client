@@ -18,7 +18,7 @@ class Haxe{
   public function reply():Pledge<Response<Dynamic>,HttpClientFailure>{
     __.log().debug('fetch: ${request.headers}');
     final delegate  = new sys.Http(request.url);
-    final complete  : FutureTrigger<Res<Response<Res<Dynamic,StxHttpClientFailure>>,StxHttpClientFailure>> = Future.trigger();
+    final complete  : FutureTrigger<Res<Response<Res<Dynamic,HttpClientFailure>>,HttpClientFailure>> = Future.trigger();
     final stream    = Stream.make(
       (cb:Chunk<HttpData,HttpClientFailure>->Void) ->{
         delegate.onError   = (err:String)-> {
