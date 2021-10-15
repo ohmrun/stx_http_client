@@ -86,7 +86,7 @@ class Haxe{
     __.log().crazy("headers added");
     if(is_post){
       //TODO other forms of Content
-      var value = Json.stringify(request.body);
+      var value = haxe.Json.stringify(request.body);
       __.log().trace(value);
       delegate.setPostBytes(haxe.io.Bytes.ofString(value));
     }

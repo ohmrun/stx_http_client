@@ -129,7 +129,7 @@ class RemotingContextCls<T,E> implements RemotingContextApi<T,E> extends Remotin
       () -> End(this.error.toErr()),
       () -> this.value.fold(
         ok -> Val(ok),
-        () -> Nil
+        () -> Tap
       )
     );
   }
