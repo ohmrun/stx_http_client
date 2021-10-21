@@ -15,6 +15,6 @@ class FlatMap<P,Pi,E> extends RemotingContextAbs<Pi,E>{
     return other().flat_map(x -> x.value);
   }
   public function get_error():Defect<E>{
-    return delegate.error.concat(other().map(x -> x.error).defv([]));
+    return delegate.error.concat(other().map(x -> x.error).defv(Defect.unit()));
   }
 }

@@ -12,22 +12,21 @@
       "stx_log",
       "fletcher"
     ],
-    "node" : {
-      "-lib"  : ["hxnodejs","stx_nodejs"],
+    "main" : {
       "-main" : "Main",
-      "-js"   : "build/node/main.js"
-    },
-    "js" : {
-      "-main" : "Main",
-      "-js"   : "build/html/main.js" 
-    },
-    "neko" : {
-      "-main" : "Main",
-      "-neko" : "build/neko/neko.n"
-    },
-    "interp" : {
-      "-main" : "Main",
-      "--interp" : true
+      "node" : {
+        "-lib"  : ["hxnodejs","stx_nodejs"],
+        "-js"   : "build/node/main.js"
+      },
+      "js" : {
+        "-js"   : "build/html/main.js" 
+      },
+      "neko" : {
+        "-neko" : "build/neko/neko.n"
+      },
+      "interp" : {
+        "--interp" : true
+      }
     }
   },
   "run" : {

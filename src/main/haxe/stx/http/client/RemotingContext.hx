@@ -44,7 +44,7 @@ class PureRemotingContextCls<T,E> extends RemotingContextAbs<T,E>{
     return __.option(extract);
   }
   public function get_error():Defect<E>{
-    return [];
+    return Defect.unit();
   }
 }
 class RemotingContextCls<T,E> implements RemotingContextApi<T,E> extends RemotingContextAbs<T,E>{
