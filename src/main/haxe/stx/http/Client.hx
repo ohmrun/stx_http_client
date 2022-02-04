@@ -36,32 +36,6 @@ class ClientAccess{
   }
 }
 
-interface ClientApi<P,R,E>{
-  public function apply(p:P):Pledge<RemotingContext<R,E>,HttpClientFailure>;
-  public function asClientDef():ClientDef<P,R,E>;
-}
-abstract class ClientCls<P,R,E> implements ClientApi<P,R,E>{
-  abstract public function apply(p:P):Pledge<RemotingContext<R,E>,HttpClientFailure>;
-  public function asClientDef():ClientDef<P,R,E>{
-    return this;
-  }
-}
-typedef ClientDef<P,R,E> = {
-  public function apply(p:P):Pledge<RemotingContext<R,E>,HttpClientFailure>;
-  public function asClientDef():ClientDef<P,R,E>;
-}
-@:using(stx.http.Client.ClientLift)
-abstract Client<P,R,E>(ClientDef<P,R,E>) from ClientDef<P,R,E> to ClientDef<P,R,E>{
-  static public var _(default,never) = ClientLift;
-  public function new(self) this = self;
-  static public function lift<P,R,E>(self:ClientDef<P,R,E>):Client<P,R,E> return new Client(self);
-
-  public function prj():ClientDef<P,R,E> return this;
-  private var self(get,never):Client<P,R,E>;
-  private function get_self():Client<P,R,E> return lift(this);
-}
-class ClientLift{
-  // static public function flat_map<P,Pi,R,E>(self:ClientDef<P,R,E>,fn:P->Client<P,Ri,E>):Client<P,R,E>{
-  //   return self
-  // }
+interface ClientApi<R,E> extends FletcherApi<Request,Response>{
+  
 }

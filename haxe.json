@@ -10,8 +10,18 @@
       "stx_pico",
       "stx_nano",
       "stx_log",
+      "stx_coroutine",
       "fletcher"
     ],
+    "unit" : {
+      "--macro" : [
+        "include('stx.http.Client,true')",
+        "include('stx.http.client,true')"
+      ],
+      "interp" : {
+        "--interp" : true
+      }
+    },
     "main" : {
       "-main" : "Main",
       "node" : {

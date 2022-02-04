@@ -4,16 +4,7 @@ import stx.http.client.remoting_context.term.Unit;
 import stx.http.client.remoting_context.term.FlatMap;
 import stx.http.client.remoting_context.term.Map;
 
-interface RemotingContextApi<T,E>{
-  public var value(get,null)          : Option<T>;
-  public function get_value():Option<T>;
-  public var error(get,null)          : Defect<E>;
-  public function get_error():Defect<E>; 
-
-  public function asRemotingContextDef():RemotingContextDef<T,E>;
-  public function asRemotingContext():RemotingContext<T,E>;
-}
-typedef RemotingContextDef<T,E> = {
+typedef RemotingContextDef<T,E> = Equity<Request,{
   var value(get,null)          : Option<T>;
   function get_value():Option<T>;
   var error(get,null)          : Defect<E>;

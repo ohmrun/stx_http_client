@@ -2,7 +2,7 @@ package stx.http.client;
 
 typedef ResponseDef<T> = {
   final code        : HttpStatusCode;
-  function decode() : Res<T,HttpClientFailure>;
+  final body        : Emiter<String,HttpClientFailure>;
 
   final headers     : Headers;
   final messages    : Cluster<ResponseMessage>;  
@@ -30,9 +30,8 @@ typedef ResponseDef<T> = {
                 err -> switch(__.tracer()(err.data)){
                   case Some(ERR(str)) :
                     var match = Chars.lift(str.toString()).starts_with("FetchError:");
-                    trace('"$str" $match');
+                    ___.log().debug(_ -> { str : str, match : match });
                     return if (str.toString().startsWith("FetchError: invalid json")){
-                      trace("JERE");
                       __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
                     }else{
                       __.reject(err);

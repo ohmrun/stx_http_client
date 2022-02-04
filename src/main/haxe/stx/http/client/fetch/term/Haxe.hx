@@ -5,7 +5,7 @@ private enum HttpData{
   HttpStatus(dat:Int);
   HttpError(err:String);
 } 
-class Haxe{
+class Haxe implements ClientApi{
   private final request   : Request;
 
   public function new(request:Request){
