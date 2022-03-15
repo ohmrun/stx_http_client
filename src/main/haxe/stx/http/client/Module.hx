@@ -1,6 +1,9 @@
 package stx.http.client;
 
 class Module extends Clazz{
+  public function ctr(){
+    return new Ctr();
+  }
   #if (!macro)
     #if (hxnodejs)
       public function fetch():Client{
@@ -20,4 +23,12 @@ class Module extends Clazz{
       return Sequent.lift(stx.http.client.fetch.term.Haxe.unit());
     }
   #end
+}
+private class Ctr extends Clazz{
+  public function RemotingContext(){
+    return new RemotingContextCtr();
+  }
+  public function Request(){
+    return new RequestCtr();
+  }
 }

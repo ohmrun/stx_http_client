@@ -6,6 +6,12 @@ package stx.http.client;
 
 @:using(stx.http.client.RequestOptions.RequestOptionsLift)
 @:forward abstract RequestOptions(RequestOptionsDef) from RequestOptionsDef{
+  public function new(self:RequestOptionsDef){ this = self;}
+  static public function unit():RequestOptions{
+    return new RequestOptions({
+      { headers : Headers.unit() }
+    });
+  }
   #if (hxnodejs && !macro)
     @:to public function toRequestInit():RequestInit{
       return {
