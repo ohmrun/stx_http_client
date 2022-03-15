@@ -1,6 +1,9 @@
 package stx.http.client;
 
 class Module extends Clazz{
+  public function fetcher<T,E>(?extractor):Attempt<Request,RemotingContext<T,E>,HttpClientFailure>{
+    return Fletcher.fromFun1Pledge(fetch.bind(extractor));
+  }
   public function extractor<E>():RemotingContextExtractor<Dynamic,E>{
     return RemotingContextExtractor.unit();
   }
