@@ -5,20 +5,13 @@ private enum HttpData{
   HttpStatus(dat:Int);
   HttpError(err:String);
 } 
-class Haxe implements ClientApi{
-  private final request   : Request;
-
-  public function new(request:Request){
-    this.request            = request;
+class Haxe implements ClientApi extends eu.ohmrun.fletcher.term.Fun1Future<RemotingContext,RemotingContext,Noise>{
+  static public function unit(){
+    return new Haxe();
   }
-  static public function fetch<T,E>(req:Request):Pledge<Response<Res<Dynamic,HttpClientFailure>>,HttpClientFailure>{
-    var http = new Haxe(req);
-    return http.reply();
-  }
-  public function reply():Pledge<Response<Res<Dynamic,HttpClientFailure>>,HttpClientFailure>{
-    __.log().debug('fetch: ${request}');
-    final delegate  = new sys.Http(request.url);
-    final complete  : FutureTrigger<Res<Response<Res<Dynamic,HttpClientFailure>>,HttpClientFailure>> = Future.trigger();
+  public function future(state:RemotingContext):Future<RemotingContext>{
+    final delegate                                    = new sys.Http(state.asset.url);
+    final complete  : FutureTrigger<RemotingContext>  = Future.trigger();
     final stream    = Stream.make(
       (cb:Chunk<HttpData,HttpClientFailure>->Void) ->{
         delegate.onError   = (err:String)-> {
@@ -43,19 +36,21 @@ class Haxe implements ClientApi{
         case [Some(int),Some(data)] :
           final decode = switch(data){
             case Left(str)    : () -> {
-              __.log().debug(_ -> _.pure(request));
-              return __.reject(__.fault().of(E_HttpClient_Error('$str at ${request.url}')));
+              __.log().debug(_ -> _.pure(state.asset));
+              return __.reject(__.fault().of(E_HttpClient_Error('$str at ${state.asset.url}')));
             }
-            case Right(str)   : () -> __.accept(haxe.Json.parse(str)); 
+            case Right(str)   : () -> __.accept(str); 
           }
-          complete.trigger(__.accept(
-            ({
-              code      : int,
-              decode    : decode,
-              messages  : [],
-              headers   : Headers.unit()
-            }:Response<Res<Dynamic,HttpClientFailure>>)
-          ));
+          complete.trigger(
+            state.map(
+              _ ->  ({
+                code      : int,
+                body      : decode().fold(ok -> Emiter.pure(Bytes.ofString(ok)),e -> Emiter.lift(__.quit(e))),
+                messages  : [],
+                headers   : Headers.unit()
+              }:Response)
+            )
+          );
         default : 
       }
     }
@@ -73,26 +68,26 @@ class Haxe implements ClientApi{
         completer();
       }
     );
-    final is_post = switch(request.method){
+    final is_post = switch(state.asset.method){
       case POST : true;
       default   : false;
     }
     
-    __.log().crazy("headers to add");
-    for(header in __.option(request.headers).defv(Headers.unit())){
+    __.log().blank("headers to add");
+    for(header in __.option(state.asset.headers).defv(Headers.unit())){
       __.log().debug(_ -> _.pure(header));
       delegate.addHeader(header.fst().toString(),header.snd());
     }
-    __.log().crazy("headers added");
+    __.log().blank("headers added");
     if(is_post){
       //TODO other forms of Content
-      var value = haxe.Json.stringify(request.body);
+      var value = haxe.Json.stringify(state.asset.body);
       __.log().trace(value);
       delegate.setPostBytes(haxe.io.Bytes.ofString(value));
     }
-    __.log().crazy('to request');
+    __.log().blank('to request');
     delegate.request(is_post);
-    __.log().crazy('requested');
-    return Pledge.lift(complete);
+    __.log().blank('requested');
+    return complete.asFuture();
   }
 }

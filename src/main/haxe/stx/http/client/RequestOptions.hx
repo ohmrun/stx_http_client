@@ -1,12 +1,12 @@
 package stx.http.client;
 
-#if hxnodejs
+#if (hxnodejs && !macro)
   import node_fetch.RequestInit;
 #end
 
 @:using(stx.http.client.RequestOptions.RequestOptionsLift)
 @:forward abstract RequestOptions(RequestOptionsDef) from RequestOptionsDef{
-  #if hxnodejs
+  #if (hxnodejs && !macro)
     @:to public function toRequestInit():RequestInit{
       return {
         headers : this.headers.toNodeFetchHeaders()
@@ -24,12 +24,12 @@ package stx.http.client;
   }
 }
 class RequestOptionsLift{
-  static public function fill(self:RequestOptions,url:String,body:Content<Dynamic>,method : HttpMethod = GET):stx.http.client.Request{
+  static public function fill(self:RequestOptions,url:String,body:Option<Content>,method : HttpMethod = GET):stx.http.client.Request{
     return (
       {
         url     : url,
         headers : self.headers,
-        body    : body,
+        body    : body.fold(ok -> ok, () -> Content.unit()),
         method  : method 
       } : RequestCls
     );

@@ -1,15 +1,30 @@
 package stx.http.client;
 
-abstract Content<T>(T){
-  static public function lift<T>(self:T){
+#if js
+import haxe.extern.EitherType;
+import js.lib.ArrayBufferView;
+import js.lib.ArrayBuffer;
+import js.html.FormData;
+import js.html.URLSearchParams;
+#end
+enum ContentSum{
+  ContentString(string:String);
+}
+abstract Content(Null<ContentSum>) from Null<ContentSum>{
+  static public function lift<T>(self:ContentSum){
     return new Content(self);
+  }
+  static public function unit():Content{
+    return lift(null);
   }
   public function new(self) this = self;
 
-  @:noUsing @:from static public function fromT<T>(v:T):Content<T>{
-    return new Content(v);
+  #if js
+  public function toBody():Null<EitherType<Blob, EitherType<EitherType<ArrayBufferView, ArrayBuffer>, EitherType<FormData, EitherType<URLSearchParams, String>>>>>{
+    return switch(this){
+      case ContentString(string)  : string;
+      case null                   : null; 
+    }
   }
-  // public function toJsonString(?replacer){
-  //   return haxe.Json.stringify(this,replacer);
-  // }
+  #end
 } 

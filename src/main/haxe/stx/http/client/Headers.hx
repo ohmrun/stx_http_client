@@ -21,7 +21,7 @@ typedef HeadersDef = Cluster<Tup2<HeaderId,String>>;
     }
     return lift(arr);
   }
-  #if hxnodejs
+  #if (hxnodejs && !macro)
   @:to public function toNodeFetchHeaders(){
     var next = new node_fetch.Headers();
     for(tp in this){
@@ -44,11 +44,11 @@ typedef HeadersDef = Cluster<Tup2<HeaderId,String>>;
       return lift(res);
     }
   #end
-  #if hxnodejs
+  #if (hxnodejs && !macro)
     @:from static public function fromNodeFetchHeaders(self:node_fetch.Headers){
       var res = [];
       self.forEach(
-        (value,name) -> {
+        (value:String,name:String,parent:node_fetch.Headers) -> {
           res.push(tuple2(cast name,value));
         }
       );

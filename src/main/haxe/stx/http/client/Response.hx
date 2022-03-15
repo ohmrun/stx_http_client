@@ -1,88 +1,103 @@
 package stx.http.client;
 
-typedef ResponseDef<T> = {
+typedef ResponseDef = {
   final code        : HttpStatusCode;
-  final body        : Emiter<String,HttpClientFailure>;
+  final body        : Emiter<Bytes,HttpClientFailure>;
 
   final headers     : Headers;
   final messages    : Cluster<ResponseMessage>;  
 }
-@:forward abstract Response<T>(ResponseDef<T>) from ResponseDef<T> to ResponseDef<T>{
+@:forward abstract Response(ResponseDef) from ResponseDef to ResponseDef{
   public function new(self) this = self;
-  static public function lift<T>(self:ResponseDef<T>):Response<T> return new Response(self);
+  static public function lift(self:ResponseDef):Response return new Response(self);
 
-  static public function make<T>(code:HttpStatusCode,decode:Void->Res<T,HttpClientFailure>,?headers:Headers,?messages:Cluster<ResponseMessage>){
+  static public function make(code:HttpStatusCode,body:Emiter<Bytes,HttpClientFailure>,?headers:Headers,?messages:Cluster<ResponseMessage>){
     return lift({
       code      : code,
-      decode    : decode,
+      body      : body,
       headers   : __.option(headers).def(() -> Headers.unit()),
       messages  : __.option(messages).def(() -> [])
     });
   }
   #if js
-  @:from static public function fromJsResponse(self:js.html.Response):Response<Pledge<Dynamic,HttpClientFailure>>{
+  @:from static public function fromJsResponse(self:js.html.Response):Response{
     return make(
       self.status,
-      () -> {
+      Emiter.lift(
+       __.tran(
+        (_:Noise) -> {
           return try{
-            __.accept(
-              self.json().toPledge().rectify(
-                err -> switch(__.tracer()(err.data)){
-                  case Some(ERR(str)) :
-                    var match = Chars.lift(str.toString()).starts_with("FetchError:");
-                    ___.log().debug(_ -> { str : str, match : match });
-                    return if (str.toString().startsWith("FetchError: invalid json")){
-                      __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
-                    }else{
+            __.hold(
+              Provide.fromFuture(
+                self.text().toPledge().rectify(
+                  err -> switch(err.val){
+                    case Some(DIGEST(ee)) :
+                      var match = Chars.lift(ee.toString()).starts_with("FetchError:");
+                      __.log().debug(_ -> _.pure({ ee : ee, match : match }));
+                      return if (ee.toString().startsWith("FetchError: invalid json")){
+                        __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
+                      }else{
+                        __.reject(err);
+                      }
+                    default :
                       __.reject(err);
-                    }
-                  default :
-                    __.reject(err);
-                }
+                  }
+                ).fold(
+                  ok -> __.emit(Bytes.ofString(ok),__.stop()),
+                  no -> __.quit(no)
+                )
               )
             );
-          }catch(e:Dynamic){
-            __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
-          } 
-      },
+          }catch(e:haxe.Exception){
+            __.quit(ErrorException.make(e,None,__.option(__.here())).toRejection());
+          }
+        }
+      )),
       Headers.fromJsHeaders(self.headers),
       Cluster.unit().snoc(({ message : self.statusText }:ResponseMessage))      
     );
   }
   #end
-  #if hxnodejs
-  @:from static public function fromNodeFetchResponse(self:node_fetch.Response):Response<Pledge<Dynamic,HttpClientFailure>>{
+  #if (hxnodejs && !macro)
+  @:from static public function fromNodeFetchResponse(self:node_fetch.Response):Response{
     return make(
       Math.round(self.status),
-      () -> {
-        return try{
-          __.accept(
-            self.json().toPledge().rectify(
-              err -> switch(__.tracer()(err.data)){
-                case Some(ERR(str)) :
-                  var match = Chars.lift(str.toString()).starts_with("FetchError:");
-                  //trace('"$str" $match');
-                  return if (str.toString().startsWith("FetchError: invalid json")){
-                    //trace("JERE");
-                    __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
-                  }else{
-                    __.reject(err);
-                  }
-                default :
-                  __.reject(err);
-              }
-            )
-          );
-        }catch(e:Dynamic){
-          __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
-        }
-      },
+      Emiter.lift(
+        __.tran(
+         (_:Noise) -> {
+            return try{
+              __.hold(
+                Provide.fromFuture(
+                  self.text().toPledge().rectify(
+                    err -> switch(err.val){
+                      case Some(DIGEST(ee)) :
+                        var match = Chars.lift(ee.toString()).starts_with("FetchError:");
+                        __.log().debug(_ -> _.pure({ ee : ee, match : match }));
+                        return if (ee.toString().startsWith("FetchError: invalid json")){
+                          __.reject(__.fault().of(E_HttpClient_CantDecode('json')));
+                        }else{
+                          __.reject(err);
+                        }
+                      default :
+                        __.reject(err);
+                    }
+                  ).fold(
+                    ok -> __.emit(Bytes.ofString(ok),__.stop()),
+                    no -> __.quit(no)
+                  )
+                )
+              );
+            }catch(e:haxe.Exception){
+              __.quit(ErrorException.make(e,None,__.option(__.here())).toRejection());
+            }
+          }
+      )),
       Headers.fromNodeFetchHeaders(self.headers),
       Cluster.unit().snoc(({ message : self.statusText }:ResponseMessage))
     );
   }
   #end
-  public function prj():ResponseDef<T> return this;
-  private var self(get,never):Response<T>;
-  private function get_self():Response<T> return lift(this);
+  public function prj():ResponseDef return this;
+  private var self(get,never):Response;
+  private function get_self():Response return lift(this);
 }

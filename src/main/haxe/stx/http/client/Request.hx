@@ -7,7 +7,7 @@ package stx.http.client;
   
   final headers               : Headers;
   
-  @:optional final body       : Content<Dynamic>;  
+  @:optional final body       : Content;  
 
   public function toString(){
     return '$method $url $headers ${haxe.Json.stringify(body," ")}';
@@ -16,14 +16,14 @@ package stx.http.client;
 @:forward abstract Request(RequestCls) from RequestCls to RequestCls{
   public function new(self) this = self;
   static public function lift(self:RequestCls):Request return new Request(self);
-  static public function make(method:HttpMethod,url:String,?headers:Headers,?body:Content<Dynamic>){
+  static public function make(method:HttpMethod,url:String,?headers:Headers,?body:Option<Content>){
     return __.option(body).is_defined().if_else(
       () -> 
       ({
         url     : url,
         method  : method,
         headers : headers,
-        body    : body
+        body    : body.defv(Content.unit())
       }:Request),
       () -> ({
           url     : url,
@@ -42,7 +42,7 @@ package stx.http.client;
         case POST : 
           new js.html.Request(this.url,
           {
-            body    : Json.stringify(this.body),
+            body    : this.body.toBody(),
             headers : headers,
             method  : this.method
           });
@@ -55,21 +55,21 @@ package stx.http.client;
       }
   }  
   #end
-  #if hxnodejs
+  #if (hxnodejs && !macro)
     @:to public function toNodeFetchRequest(){
       var headers = new node_fetch.Headers();
       for(i in __.option(this.headers).defv(new Headers())){
         headers.set(i.fst().toString(),i.snd());
       }
       return switch(this.method){
-        case POST : return new node_fetch.Request({ href : this.url },
+        case POST : return new node_fetch.Request((this.url:String),
           ({
-            body    : Json.stringify(this.body),
+            body    : this.body.toBody(),
             headers : headers,
             method  : this.method
           }:node_fetch.RequestInit));
         default : 
-          new node_fetch.Request({ href : this.url },
+          new node_fetch.Request((this.url:String),
           ({
             headers : headers,
             method  : this.method

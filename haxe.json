@@ -10,8 +10,10 @@
       "stx_pico",
       "stx_nano",
       "stx_log",
+      "stx_test",
       "stx_coroutine",
-      "fletcher"
+      "fletcher",
+      "stx_bake"
     ],
     "unit" : {
       "--macro" : [
@@ -29,6 +31,7 @@
         "-js"   : "build/node/main.js"
       },
       "js" : {
+        "-lib" : ["hxnodejs","stx_nodejs"],
         "-js"   : "build/html/main.js" 
       },
       "neko" : {
@@ -36,6 +39,21 @@
       },
       "interp" : {
         "--interp" : true
+      }
+    },
+    "test" : {
+      "-D" : ["debug"],
+      "-main" : "stx.http.client.Test",
+      "interp" : {
+        "--interp" : true
+      },
+      "js" : {
+        "--js" : ".stx/build/test/js/main.js"
+      },
+      "nodejs" : {
+        "--macro" : ["allowPackage('sys')"],
+        "-lib"    : ["hxnodejs","stx_nodejs"],
+        "--js"    : ".stx/build/test/nodejs/main.js"
       }
     }
   },
