@@ -32,7 +32,7 @@ package stx.http.client;
       }:Request)
     );
   }
-  #if js
+  #if (js && !hxnodejs)
   public function toJsRequest():js.html.Request{
     var headers = new haxe.DynamicAccess();
       for(i in __.option(this.headers).defv(new Headers())){

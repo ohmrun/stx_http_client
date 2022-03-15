@@ -7,10 +7,12 @@ class Module extends Clazz{
   #if (!macro)
     #if (hxnodejs)
       public function fetch():Client{
+        __.log().debug('node');
         return Sequent.lift(stx.http.client.fetch.term.NodeJs.unit());
       }
     #elseif js
       public function fetch():Client{
+        __.log().debug('js');
         return Sequent.lift(stx.http.client.fetch.term.Js.unit());
       }
     #else
