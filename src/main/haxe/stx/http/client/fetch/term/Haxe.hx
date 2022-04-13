@@ -5,13 +5,13 @@ private enum HttpData{
   HttpStatus(dat:Int);
   HttpError(err:String);
 } 
-class Haxe implements ClientApi extends eu.ohmrun.fletcher.term.Fun1Future<RemotingContext,RemotingContext,Noise>{
+class Haxe implements ClientApi extends eu.ohmrun.fletcher.term.Fun1Future<RemotingPayload<Noise>,RemotingPayload<Noise>,Noise>{
   static public function unit(){
     return new Haxe();
   }
-  public function future(state:RemotingContext):Future<RemotingContext>{
-    final delegate                                    = new sys.Http(state.asset.url);
-    final complete  : FutureTrigger<RemotingContext>  = Future.trigger();
+  public function future(state:RemotingPayload<Noise>):Future<RemotingPayload<Noise>>{
+    final delegate                                    = new sys.Http(state.asset.request.url);
+    final complete  : FutureTrigger<RemotingPayload<Noise>>  = Future.trigger();
     final stream    = Stream.make(
       (cb:Chunk<HttpData,HttpClientFailure>->Void) ->{
         delegate.onError   = (err:String)-> {
@@ -37,19 +37,24 @@ class Haxe implements ClientApi extends eu.ohmrun.fletcher.term.Fun1Future<Remot
           final decode = switch(data){
             case Left(str)    : () -> {
               __.log().debug(_ -> _.pure(state.asset));
-              return __.reject(__.fault().of(E_HttpClient_Error('$str at ${state.asset.url}')));
+              return __.reject(__.fault().of(E_HttpClient_Error('$str at ${state.asset.request.url}')));
             }
             case Right(str)   : () -> __.accept(str); 
           }
           complete.trigger(
-            state.map(
-              _ ->  ({
-                code      : int,
-                body      : decode().fold(ok -> Emiter.pure(Bytes.ofString(ok)),e -> Emiter.lift(__.quit(e))),
-                messages  : [],
-                headers   : Headers.unit()
-              }:Response)
-            )
+            $type(state.mapi(
+              (context:RemotingContext) ->  
+                RemotingContext.make(
+                  context.request,
+                  Some(
+                  ({code      : int,
+                    body      : decode().fold(ok -> Emiter.pure(Bytes.ofString(ok)),e -> Emiter.lift(__.quit(e))),
+                    messages  : [],
+                    headers   : Headers.unit()
+                  }:Response)
+                )
+              )
+            ))
           );
         default : 
       }
@@ -68,20 +73,20 @@ class Haxe implements ClientApi extends eu.ohmrun.fletcher.term.Fun1Future<Remot
         completer();
       }
     );
-    final is_post = switch(state.asset.method){
+    final is_post = switch(state.asset.request.method){
       case POST : true;
       default   : false;
     }
     
     __.log().blank("headers to add");
-    for(header in __.option(state.asset.headers).defv(Headers.unit())){
+    for(header in __.option(state.asset.request.headers).defv(Headers.unit())){
       __.log().debug(_ -> _.pure(header));
       delegate.addHeader(header.fst().toString(),header.snd());
     }
     __.log().blank("headers added");
     if(is_post){
       //TODO other forms of Content
-      var value = haxe.Json.stringify(state.asset.body);
+      var value = haxe.Json.stringify(state.asset.request.body);
       __.log().trace(value);
       delegate.setPostBytes(haxe.io.Bytes.ofString(value));
     }

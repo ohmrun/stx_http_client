@@ -15,8 +15,8 @@ package stx.http.client;
 }
 @:forward abstract Request(RequestCls) from RequestCls to RequestCls{
   public function new(self) this = self;
-  static public function lift(self:RequestCls):Request return new Request(self);
-  static public function make(method:HttpMethod,url:String,?headers:Headers,?body:Option<Content>){
+  @:noUsing static public function lift(self:RequestCls):Request return new Request(self);
+  @:noUsing static public function make(method:HttpMethod,url:String,?headers:Headers,?body:Option<Content>){
     return __.option(body).is_defined().if_else(
       () -> 
       ({

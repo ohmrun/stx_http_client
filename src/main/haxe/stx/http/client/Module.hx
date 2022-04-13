@@ -27,8 +27,8 @@ class Module extends Clazz{
   #end
 }
 private class Ctr extends Clazz{
-  public function RemotingContext(){
-    return new RemotingContextCtr();
+  public function RemotingPayload(){
+    return new RemotingPayloadCtr();
   }
   public function Request(){
     return new RequestCtr();

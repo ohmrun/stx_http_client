@@ -9,9 +9,9 @@ typedef ResponseDef = {
 }
 @:forward abstract Response(ResponseDef) from ResponseDef to ResponseDef{
   public function new(self) this = self;
-  static public function lift(self:ResponseDef):Response return new Response(self);
+  @:noUsing static public function lift(self:ResponseDef):Response return new Response(self);
 
-  static public function make(code:HttpStatusCode,body:Emiter<Bytes,HttpClientFailure>,?headers:Headers,?messages:Cluster<ResponseMessage>){
+  @:noUsing static public function make(code:HttpStatusCode,body:Emiter<Bytes,HttpClientFailure>,?headers:Headers,?messages:Cluster<ResponseMessage>){
     return lift({
       code      : code,
       body      : body,

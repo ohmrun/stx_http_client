@@ -10,7 +10,8 @@ typedef FetchConfig                             = stx.http.client.FetchConfig;
 typedef Headers                                 = stx.http.client.Headers;
 typedef HeadersCtr                              = stx.http.client.HeadersCtr;
 typedef HeadersCtrApi                           = stx.http.client.HeadersCtrApi;
-typedef RemotingContextCtr                      = stx.http.client.RemotingContextCtr;
+typedef RemotingPayloadCtr                      = stx.http.client.RemotingPayloadCtr;
+typedef RemotingPayload<T>                      = stx.http.client.RemotingPayload<T>;
 typedef RemotingContext                         = stx.http.client.RemotingContext;
 typedef RemotingContextDef                      = stx.http.client.RemotingContext.RemotingContextDef;
 typedef RemotingContextCls                      = stx.http.client.RemotingContext.RemotingContextCls;
@@ -33,5 +34,5 @@ class ClientAccess{
   }
 }
 
-typedef ClientApi = SequentDef<Request,Response,HttpClientFailure>;
-typedef Client    = Sequent<Request,Response,HttpClientFailure>;
+typedef ClientApi = SequentDef<RemotingContext,Noise,HttpClientFailure>;
+typedef Client    = Sequent<RemotingContext,Noise,HttpClientFailure>;

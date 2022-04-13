@@ -7,10 +7,14 @@ abstract class Fetch<C:FetchConfigDef>{
   public function new(config:C){
     this.config     = config;
   }
-  public function request(method:HttpMethod,path:String,headers:Headers,body:Option<Content>):RemotingContext{
+  public function request(method:HttpMethod,path:String,headers:Headers,body:Option<Content>):RemotingPayload<Noise>{
     return 
       Equity.make(
-        Request.make(method,'${this.config.base}$path',this.config.options.headers.concat(headers),body.defv(null)),
+        RemotingContext.make(
+          Request.make(method,'${this.config.base}$path',this.config.options.headers.concat(headers),body.defv(null)),
+          None
+        ),
+        Noise,
         null
       );
   }

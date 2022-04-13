@@ -5,12 +5,17 @@ package stx.http.client.fetch.term;
     static public function unit(){
       return new Js();
     }
-    public function defer(state:RemotingContext,cont:Terminal<RemotingContext,Noise>):Work{
-      final request = state.asset.toJsRequest();
+    public function defer(state:RemotingPayload<Noise>,cont:Terminal<RemotingPayload<Noise>,Noise>):Work{
+      final request = state.asset.request.toJsRequest();
       return cont.receive(
         cont.later(
           js.Browser.window.fetch(request).toPledge().fold(
-            ok -> state.map(_ -> Response.fromJsResponse(ok)),
+            ok -> state.mapi(
+              context -> RemotingContext.make(
+               context.request,
+               Some(Response.fromJsResponse(ok))
+              )
+            ),
             no -> state.errata(
               _ -> 
                 Error.make(

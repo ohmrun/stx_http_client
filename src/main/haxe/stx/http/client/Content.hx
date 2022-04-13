@@ -11,7 +11,7 @@ enum ContentSum{
   ContentString(string:String);
 }
 abstract Content(Null<ContentSum>) from Null<ContentSum>{
-  static public function lift<T>(self:ContentSum){
+  @:noUsing static public function lift<T>(self:ContentSum){
     return new Content(self);
   }
   static public function unit():Content{

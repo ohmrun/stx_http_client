@@ -8,12 +8,18 @@ package stx.http.client.fetch.term;
     static public function unit(){
       return new NodeJs();
     }
-    public function defer(state:RemotingContext,cont:Terminal<RemotingContext,Noise>):Work{
-      final request = state.asset.toNodeFetchRequest();
+    public function defer(state:RemotingPayload<Noise>,cont:Terminal<RemotingPayload<Noise>,Noise>):Work{
+      final request = state.asset.request.toNodeFetchRequest();
       return cont.receive(
         cont.later(
           Pledge.fromJsPromise(NodeFetch.default_(request)).fold(
-            ok -> state.relate(Response.fromNodeFetchResponse(ok)),
+            ok -> 
+              state.mapi(
+                context -> RemotingContext.make(
+                  context.request,
+                  Some(Response.fromNodeFetchResponse(ok))
+                )
+              ),
             no -> state.defect( 
               [
                 no.fold(
