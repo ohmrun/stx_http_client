@@ -22,6 +22,16 @@
       ],
       "interp" : {
         "--interp" : true
+      },
+      "js" : {
+        "node" : {
+          "--macro" : ["allowPackage('sys')"],
+          "-lib"  : ["hxnodejs","stx_nodejs"],
+          "-js"   : "build/unit/node/main.js"
+        }
+      },
+      "neko" : {
+        "-neko" : "build/unit/neko/neko.n"
       }
     },
     "main" : {

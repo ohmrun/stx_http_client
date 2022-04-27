@@ -42,7 +42,7 @@ class Haxe implements ClientApi extends eu.ohmrun.fletcher.term.Fun1Future<Remot
             case Right(str)   : () -> __.accept(str); 
           }
           complete.trigger(
-            $type(state.mapi(
+            (state.mapi(
               (context:RemotingContext) ->  
                 RemotingContext.make(
                   context.request,

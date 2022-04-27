@@ -30,8 +30,8 @@ typedef ResponseDef = {
             __.hold(
               Provide.fromFuture(
                 self.text().toPledge().rectify(
-                  err -> switch(err.val){
-                    case Some(DIGEST(ee)) :
+                  (err:Refuse<stx.fail.HttpClientFailure>) -> switch(err.data){
+                    case Some(EXTERIOR(E_HttpClient_Error(ee))) :
                       var match = Chars.lift(ee.toString()).starts_with("FetchError:");
                       __.log().debug(_ -> _.pure({ ee : ee, match : match }));
                       return if (ee.toString().startsWith("FetchError: invalid json")){
@@ -49,7 +49,7 @@ typedef ResponseDef = {
               )
             );
           }catch(e:haxe.Exception){
-            __.quit(ErrorException.make(e,None,__.option(__.here())).toRejection());
+            __.quit(Error.Caught(None,None,Some(__.here()),e));
           }
         }
       )),
@@ -69,8 +69,8 @@ typedef ResponseDef = {
               __.hold(
                 Provide.fromFuture(
                   self.text().toPledge().rectify(
-                    err -> switch(err.val){
-                      case Some(DIGEST(ee)) :
+                    err -> switch(err.data){
+                      case Some(INTERIOR(ee)) :
                         var match = Chars.lift(ee.toString()).starts_with("FetchError:");
                         __.log().debug(_ -> _.pure({ ee : ee, match : match }));
                         return if (ee.toString().startsWith("FetchError: invalid json")){
@@ -88,7 +88,7 @@ typedef ResponseDef = {
                 )
               );
             }catch(e:haxe.Exception){
-              __.quit(ErrorException.make(e,None,__.option(__.here())).toRejection());
+              __.quit(Error.Caught(None,None,__.option(__.here()),e).toRefuse());
             }
           }
       )),

@@ -21,13 +21,7 @@ package stx.http.client.fetch.term;
                 )
               ),
             no -> state.defect( 
-              [
-                no.fold(
-                  e   -> E_HttpClient_Unknown(e),
-                  f   -> E_HttpClient_Unknown(f),
-                  ()  -> E_HttpClient_Unknown(null)
-                )
-              ]
+              no.errate(E_HttpClient_Unknown)
             ) 
           ).map(__.success)
         )
