@@ -1,6 +1,6 @@
 package stx.http.client.fetch.term;
 
-#if (!hxnodejs)
+#if (!hxnodejs && js)
   class Js implements ClientApi extends StxMemberCls{
     static public function unit(){
       return new Js();
@@ -18,7 +18,7 @@ package stx.http.client.fetch.term;
             ),
             no -> state.errata(
               _ -> 
-                Error.make(
+                Refuse.make(
                   no.usher(
                     opt -> 
                         opt.fold(
