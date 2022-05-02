@@ -5,9 +5,9 @@ class Module extends Clazz{
     return new Ctr();
   }
   #if (!macro)
-    #if (hxnodejs)
+    #if (nodejs)
       public function fetch():Client{
-        __.log().debug('node');
+        __.log().debug('nodejs');
         return Scenario.lift(stx.http.client.fetch.term.NodeJs.unit());
       }
     #elseif js
@@ -17,6 +17,7 @@ class Module extends Clazz{
       }
     #else
       public function fetch():Client{
+        __.log().debug('haxe');
         return Scenario.lift(stx.http.client.fetch.term.Haxe.unit());
       }
     #end    

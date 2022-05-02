@@ -58,7 +58,7 @@ typedef ResponseDef = {
     );
   }
   #end
-  #if (hxnodejs && !macro)
+  #if (nodejs && !macro)
   @:from static public function fromNodeFetchResponse(self:node_fetch.Response):Response{
     return make(
       Math.round(self.status),

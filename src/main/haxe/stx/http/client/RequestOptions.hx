@@ -1,6 +1,6 @@
 package stx.http.client;
 
-#if (hxnodejs && !macro)
+#if (nodejs)
   import node_fetch.RequestInit;
 #end
 
@@ -12,7 +12,7 @@ package stx.http.client;
       { headers : Headers.unit() }
     });
   }
-  #if (hxnodejs && !macro)
+  #if (nodejs)
     @:to public function toRequestInit():RequestInit{
       return {
         headers : this.headers.toNodeFetchHeaders()

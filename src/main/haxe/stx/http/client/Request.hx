@@ -32,7 +32,7 @@ package stx.http.client;
       }:Request)
     );
   }
-  #if (js && !hxnodejs)
+  #if (js && !nodejs)
   public function toJsRequest():js.html.Request{
     var headers = new haxe.DynamicAccess();
       for(i in __.option(this.headers).defv(new Headers())){
@@ -55,7 +55,7 @@ package stx.http.client;
       }
   }  
   #end
-  #if (hxnodejs && !macro)
+  #if (nodejs)
     @:to public function toNodeFetchRequest(){
       var headers = new node_fetch.Headers();
       for(i in __.option(this.headers).defv(new Headers())){

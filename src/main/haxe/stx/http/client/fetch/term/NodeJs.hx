@@ -1,6 +1,6 @@
 package stx.http.client.fetch.term;
 
-#if hxnodejs
+#if nodejs
   class NodeJs implements ClientApi extends StxMemberCls{
     public function get_stx_tag(){
       return throw 'unimplemented';
@@ -9,6 +9,7 @@ package stx.http.client.fetch.term;
       return new NodeJs();
     }
     public function defer(state:RemotingPayload<Noise>,cont:Terminal<RemotingPayload<Noise>,Noise>):Work{
+      __.log().debug('request');
       final request = state.asset.request.toNodeFetchRequest();
       return cont.receive(
         cont.later(
@@ -17,7 +18,7 @@ package stx.http.client.fetch.term;
               state.mapi(
                 context -> RemotingContext.make(
                   context.request,
-                  Some(Response.fromNodeFetchResponse(ok))
+                  Some(Response.fromNodeFetchResponse(__.tracer()(ok)))
                 )
               ),
             no -> state.defect( 

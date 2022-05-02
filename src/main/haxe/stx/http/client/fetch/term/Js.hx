@@ -1,6 +1,6 @@
 package stx.http.client.fetch.term;
 
-#if (!hxnodejs && js)
+#if (!nodejs && js)
   class Js implements ClientApi extends StxMemberCls{
     static public function unit(){
       return new Js();
