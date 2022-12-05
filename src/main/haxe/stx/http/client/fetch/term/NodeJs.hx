@@ -27,8 +27,8 @@ package stx.http.client.fetch.term;
             {
               return state.defect(
                 switch(no.data){
-                  case Some(INTERIOR(x)) : __.fault().decline(INTERIOR(x));
-                  case Some(EXTERIOR(x)) : no.errate(E_HttpClient_Unknown);
+                  case Some(INTERNAL(x)) : __.fault().decline(INTERNAL(x));
+                  case Some(EXTERNAL(x)) : no.errate(E_HttpClient_Unknown);
                   case None              : __.fault().explain(_ -> _.e_undefined());
                 } 
               );

@@ -1,0 +1,16 @@
+-main stx.http.client.Test
+-cp src/main/haxe
+-lib http-status
+-lib tink_core
+-lib stx_pico
+-lib stx_nano
+-lib stx_log
+-lib stx_test
+-lib stx_coroutine
+-lib fletcher
+-lib stx_bake
+-lib hxnodejs
+-lib stx_nodejs
+-D no-deprecation-warnings
+--macro allowPackage('sys')
+--js .stx/build/test/nodejs/main.js

@@ -13,6 +13,6 @@ class Test{
   static public function main(){
     boot();
 
-    __.test([],[]);
+    __.test().run([],[]);
   }
 }

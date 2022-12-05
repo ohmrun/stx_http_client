@@ -31,7 +31,7 @@ typedef ResponseDef = {
               Provide.fromFuture(
                 self.text().toPledge().rectify(
                   (err:Refuse<stx.fail.HttpClientFailure>) -> switch(err.data){
-                    case Some(EXTERIOR(E_HttpClient_Error(ee))) :
+                    case Some(EXTERNAL(E_HttpClient_Error(ee))) :
                       var match = Chars.lift(ee.toString()).starts_with("FetchError:");
                       __.log().debug(_ -> _.pure({ ee : ee, match : match }));
                       return if (ee.toString().startsWith("FetchError: invalid json")){
@@ -70,7 +70,7 @@ typedef ResponseDef = {
                 Provide.fromFuture(
                   self.text().toPledge().rectify(
                     err -> switch(err.data){
-                      case Some(INTERIOR(ee)) :
+                      case Some(INTERNAL(ee)) :
                         var match = Chars.lift(ee.toString()).starts_with("FetchError:");
                         __.log().debug(_ -> _.pure({ ee : ee, match : match }));
                         return if (ee.toString().startsWith("FetchError: invalid json")){
