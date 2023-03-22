@@ -4,8 +4,9 @@ using stx.Test;
 using stx.Bake;
 class Test{
   static macro function boot(){
-    final log = __.log().global;
-          log.includes.push("**/*");
+    final log = __.log().global.with_logic(
+      l -> l.or(l.pack("**/*"))
+    );
     final bake = __.bake();
     trace(bake);
     return macro {};

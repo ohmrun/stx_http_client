@@ -10,7 +10,6 @@
       "stx_pico",
       "stx_nano",
       "stx_log",
-      "stx_test",
       "stx_coroutine",
       "fletcher",
       "stx_bake"
@@ -52,6 +51,8 @@
       }
     },
     "test" : {
+      "-L"  : ["stx_test"],
+      "-cp" : "src/test/haxe",
       "-D" : ["debug"],
       "-main" : "stx.http.client.Test",
       "interp" : {
