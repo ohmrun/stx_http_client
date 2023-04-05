@@ -12,7 +12,7 @@
       "stx_log",
       "stx_coroutine",
       "fletcher",
-      "stx_bake"
+      "bake"
     ],
     "unit" : {
       "--macro" : [

@@ -1,7 +1,7 @@
 package stx.http.client;
 
 using stx.Test;
-using stx.Bake;
+using Bake;
 class Test{
   static macro function boot(){
     final log = __.log().global.with_logic(
