@@ -7,7 +7,7 @@ class Test{
     final log = __.log().global.with_logic(
       l -> l.or(l.pack("**/*"))
     );
-    final bake = __.bake();
+    final bake = Bake.pop();
     trace(bake);
     return macro {};
   }
