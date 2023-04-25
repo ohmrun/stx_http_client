@@ -3063,10 +3063,10 @@ eu_ohmrun_FletcherWildcards.attempt = function(wildcard,self,pos) {
 		return eu_ohmrun_fletcher_Attempt.pure(r);
 	case 1:
 		var res = self.res;
-		return eu_ohmrun_fletcher_Attempt.fromRes(res);
+		return eu_ohmrun_fletcher_Attempt.fromUpshot(res);
 	case 2:
 		var fn1 = self.fn;
-		return eu_ohmrun_fletcher_Attempt.fromFun1Res(fn1);
+		return eu_ohmrun_fletcher_Attempt.fromFun1Upshot(fn1);
 	case 3:
 		var fn1 = self.fn;
 		return eu_ohmrun_fletcher_Attempt.fromFun1Produce(fn1);
@@ -3110,7 +3110,7 @@ eu_ohmrun_FletcherWildcards.arrange = function(wildcard,self) {
 		return eu_ohmrun_fletcher_Arrange.pure(o);
 	case 1:
 		var res = self.res;
-		return eu_ohmrun_fletcher_Arrange.fromRes(res);
+		return eu_ohmrun_fletcher_Arrange.fromUpshot(res);
 	case 2:
 		var f = self.f;
 		return eu_ohmrun_fletcher_Arrange.fromFun1Attempt(f);
@@ -3149,8 +3149,8 @@ eu_ohmrun_fletcher_ArrangeArg.fromArgFun1Modulate = function(f) {
 eu_ohmrun_fletcher_ArrangeArg.fromArgFun1Attempt = function(f) {
 	return eu_ohmrun_fletcher_ArrangeArgSum.ArrangeArgFun1Attempt(f);
 };
-eu_ohmrun_fletcher_ArrangeArg.fromArgRes = function(res) {
-	return eu_ohmrun_fletcher_ArrangeArgSum.ArrangeArgRes(res);
+eu_ohmrun_fletcher_ArrangeArg.fromArgUpshot = function(res) {
+	return eu_ohmrun_fletcher_ArrangeArgSum.ArrangeArgUpshot(res);
 };
 eu_ohmrun_fletcher_ArrangeArg.fromArgPure = function(o) {
 	return eu_ohmrun_fletcher_ArrangeArgSum.ArrangeArgPure(o);
@@ -3418,7 +3418,7 @@ eu_ohmrun_fletcher_Arrange.bump = function(self) {
 		return eu_ohmrun_fletcher_Arrange.pure(o);
 	case 1:
 		var res = self.res;
-		return eu_ohmrun_fletcher_Arrange.fromRes(res);
+		return eu_ohmrun_fletcher_Arrange.fromUpshot(res);
 	case 2:
 		var f = self.f;
 		return eu_ohmrun_fletcher_Arrange.fromFun1Attempt(f);
@@ -3464,7 +3464,7 @@ eu_ohmrun_fletcher_Arrange.pure = function(o) {
 	});
 	return this1;
 };
-eu_ohmrun_fletcher_Arrange.fromRes = function(res) {
+eu_ohmrun_fletcher_Arrange.fromUpshot = function(res) {
 	var this1 = eu_ohmrun_Fletcher.Anon(function(i,cont) {
 		var self = cont;
 		var receiver;
@@ -3695,11 +3695,11 @@ eu_ohmrun_fletcher_AttemptArg.fromArgUnary1Produce = function(fn) {
 eu_ohmrun_fletcher_AttemptArg.fromArgFun1Produce = function(fn) {
 	return eu_ohmrun_fletcher_AttemptArgSum.AttemptArgFun1Produce(fn);
 };
-eu_ohmrun_fletcher_AttemptArg.fromArgFun1Res = function(fn) {
-	return eu_ohmrun_fletcher_AttemptArgSum.AttemptArgFun1Res(fn);
+eu_ohmrun_fletcher_AttemptArg.fromArgFun1Upshot = function(fn) {
+	return eu_ohmrun_fletcher_AttemptArgSum.AttemptArgFun1Upshot(fn);
 };
-eu_ohmrun_fletcher_AttemptArg.fromArgRes = function(fn) {
-	return eu_ohmrun_fletcher_AttemptArgSum.AttemptArgRes(fn);
+eu_ohmrun_fletcher_AttemptArg.fromArgUpshot = function(fn) {
+	return eu_ohmrun_fletcher_AttemptArgSum.AttemptArgUpshot(fn);
 };
 eu_ohmrun_fletcher_AttemptArg.fromArgPure = function(r) {
 	return eu_ohmrun_fletcher_AttemptArgSum.AttemptArgPure(r);
@@ -4073,10 +4073,10 @@ eu_ohmrun_fletcher_Attempt.bump = function(self) {
 		return eu_ohmrun_fletcher_Attempt.pure(r);
 	case 1:
 		var res = self.res;
-		return eu_ohmrun_fletcher_Attempt.fromRes(res);
+		return eu_ohmrun_fletcher_Attempt.fromUpshot(res);
 	case 2:
 		var fn = self.fn;
-		return eu_ohmrun_fletcher_Attempt.fromFun1Res(fn);
+		return eu_ohmrun_fletcher_Attempt.fromFun1Upshot(fn);
 	case 3:
 		var fn = self.fn;
 		return eu_ohmrun_fletcher_Attempt.fromFun1Produce(fn);
@@ -4114,9 +4114,9 @@ eu_ohmrun_fletcher_Attempt.unit = function() {
 	return this1;
 };
 eu_ohmrun_fletcher_Attempt.pure = function(o) {
-	return eu_ohmrun_fletcher_Attempt.fromRes(stx_nano_lift_LiftNano.accept(stx_nano_Wildcard.__,o));
+	return eu_ohmrun_fletcher_Attempt.fromUpshot(stx_nano_lift_LiftNano.accept(stx_nano_Wildcard.__,o));
 };
-eu_ohmrun_fletcher_Attempt.fromRes = function(res) {
+eu_ohmrun_fletcher_Attempt.fromUpshot = function(res) {
 	var this1 = eu_ohmrun_Fletcher.Anon(function(_,cont) {
 		var self = cont;
 		var value = stx_nano_lift_LiftNano.success(stx_nano_Wildcard.__,res);
@@ -4137,7 +4137,7 @@ eu_ohmrun_fletcher_Attempt.fromRes = function(res) {
 	});
 	return this1;
 };
-eu_ohmrun_fletcher_Attempt.fromFun1Res = function(fn) {
+eu_ohmrun_fletcher_Attempt.fromFun1Upshot = function(fn) {
 	var this1 = eu_ohmrun_Fletcher.Anon(function(pI,cont) {
 		var self = cont;
 		var value = stx_nano_lift_LiftNano.success(stx_nano_Wildcard.__,fn(pI));
@@ -5532,14 +5532,14 @@ eu_ohmrun_fletcher_ModulateArg.fromModulateArgFletcher = function(self) {
 eu_ohmrun_fletcher_ModulateArg.fromModulateArgFunResRes0 = function(self) {
 	return eu_ohmrun_fletcher_ModulateArg.lift(eu_ohmrun_fletcher_ModulateArgSum.ModulateArgFunResRes0(self));
 };
-eu_ohmrun_fletcher_ModulateArg.fromModulateArgFun1Res = function(self) {
-	return eu_ohmrun_fletcher_ModulateArg.lift(eu_ohmrun_fletcher_ModulateArgSum.ModulateArgFun1Res(self));
+eu_ohmrun_fletcher_ModulateArg.fromModulateArgFun1Upshot = function(self) {
+	return eu_ohmrun_fletcher_ModulateArg.lift(eu_ohmrun_fletcher_ModulateArgSum.ModulateArgFun1Upshot(self));
 };
 eu_ohmrun_fletcher_ModulateArg.fromModulateArgFun1R = function(self) {
 	return eu_ohmrun_fletcher_ModulateArg.lift(eu_ohmrun_fletcher_ModulateArgSum.ModulateArgFun1R(self));
 };
-eu_ohmrun_fletcher_ModulateArg.fromModulateArgRes = function(self) {
-	return eu_ohmrun_fletcher_ModulateArg.lift(eu_ohmrun_fletcher_ModulateArgSum.ModulateArgRes(self));
+eu_ohmrun_fletcher_ModulateArg.fromModulateArgUpshot = function(self) {
+	return eu_ohmrun_fletcher_ModulateArg.lift(eu_ohmrun_fletcher_ModulateArgSum.ModulateArgUpshot(self));
 };
 eu_ohmrun_fletcher_ModulateArg.fromModulateArgPure = function(o) {
 	return eu_ohmrun_fletcher_ModulateArg.lift(eu_ohmrun_fletcher_ModulateArgSum.ModulateArgPure(o));
@@ -5597,7 +5597,7 @@ eu_ohmrun_fletcher_ModulateArg.toModulate = function(this1) {
 		return eu_ohmrun_fletcher_Modulate.fromFun1R(fn2);
 	case 6:
 		var ocR = this1.ocR;
-		return eu_ohmrun_fletcher_Modulate.fromRes(ocR);
+		return eu_ohmrun_fletcher_Modulate.fromUpshot(ocR);
 	case 7:
 		var o = this1.o;
 		return eu_ohmrun_fletcher_Modulate.pure(o);
@@ -5979,7 +5979,7 @@ eu_ohmrun_fletcher_ModulateLift.flat_map = function(self,fn) {
 			break;
 		case 1:
 			var e = res.e;
-			tmp = eu_ohmrun_fletcher_Modulate.fromRes(stx_nano_lift_LiftNano.reject(stx_nano_Wildcard.__,e));
+			tmp = eu_ohmrun_fletcher_Modulate.fromUpshot(stx_nano_lift_LiftNano.reject(stx_nano_Wildcard.__,e));
 			break;
 		}
 		return eu_ohmrun_fletcher_Modulate.toFletcher(tmp);
@@ -6083,12 +6083,12 @@ eu_ohmrun_fletcher_Modulate.unit = function() {
 	return this1;
 };
 eu_ohmrun_fletcher_Modulate.pure = function(o) {
-	return eu_ohmrun_fletcher_Modulate.fromRes(stx_nano_lift_LiftNano.accept(stx_nano_Wildcard.__,o));
+	return eu_ohmrun_fletcher_Modulate.fromUpshot(stx_nano_lift_LiftNano.accept(stx_nano_Wildcard.__,o));
 };
 eu_ohmrun_fletcher_Modulate.Fun = function(fn) {
 	return eu_ohmrun_fletcher_Modulate.fromFun1R(fn);
 };
-eu_ohmrun_fletcher_Modulate.fromFun1Res = function(fn) {
+eu_ohmrun_fletcher_Modulate.fromFun1Upshot = function(fn) {
 	var fn1 = function(ocI) {
 		switch(ocI._hx_index) {
 		case 0:
@@ -6154,7 +6154,7 @@ eu_ohmrun_fletcher_Modulate.fromFun1R = function(fn) {
 	});
 	return this1;
 };
-eu_ohmrun_fletcher_Modulate.fromRes = function(ocO) {
+eu_ohmrun_fletcher_Modulate.fromUpshot = function(ocO) {
 	var fn = function(ocI) {
 		switch(ocI._hx_index) {
 		case 0:
@@ -6220,7 +6220,7 @@ eu_ohmrun_fletcher_Modulate.fromFunResRes0 = function(fn) {
 	});
 	return this1;
 };
-eu_ohmrun_fletcher_Modulate.fromFunResRes = function(fn) {
+eu_ohmrun_fletcher_Modulate.fromFunResUpshot = function(fn) {
 	var fn1 = function(res) {
 		switch(res._hx_index) {
 		case 0:
@@ -6792,7 +6792,7 @@ eu_ohmrun_fletcher_ProduceLift.flat_map = function(self,that) {
 			break;
 		case 1:
 			var e = res.e;
-			this1 = eu_ohmrun_fletcher_Produce.fromRes(stx_nano_lift_LiftNano.reject(stx_nano_Wildcard.__,e));
+			this1 = eu_ohmrun_fletcher_Produce.fromUpshot(stx_nano_lift_LiftNano.reject(stx_nano_Wildcard.__,e));
 			break;
 		}
 		return this1;
@@ -7027,10 +7027,10 @@ eu_ohmrun_fletcher_Produce.accept = function(v) {
 eu_ohmrun_fletcher_Produce.reject = function(e) {
 	return eu_ohmrun_fletcher_Produce.Sync(stx_nano_lift_LiftNano.reject(stx_nano_Wildcard.__,e));
 };
-eu_ohmrun_fletcher_Produce.fromRes = function(res) {
+eu_ohmrun_fletcher_Produce.fromUpshot = function(res) {
 	return eu_ohmrun_fletcher_Produce.Sync(res);
 };
-eu_ohmrun_fletcher_Produce.fromFunXRes = function(fn) {
+eu_ohmrun_fletcher_Produce.fromFunXUpshot = function(fn) {
 	return eu_ohmrun_fletcher_Produce.Thunk(fn);
 };
 eu_ohmrun_fletcher_Produce.fromPledge = function(pl) {
@@ -25580,7 +25580,7 @@ stx_coroutine_core_Return.fromT = function(v) {
 stx_coroutine_core_Return.toCoroutine = function(this1) {
 	return stx_coroutine_core_CoroutineSum.Halt(stx_coroutine_core_Return.lift(this1));
 };
-stx_coroutine_core_Return.toOptionRes = function(this1) {
+stx_coroutine_core_Return.toOptionUpshot = function(this1) {
 	switch(this1._hx_index) {
 	case 0:
 		var _g = this1.c;
@@ -32640,7 +32640,7 @@ stx_nano_Contract.fromOption = function(m) {
 	var val1 = val;
 	return stx_nano_Contract.fromChunk(val1);
 };
-stx_nano_Contract.fromRes = function(self) {
+stx_nano_Contract.fromUpshot = function(self) {
 	var tmp;
 	switch(self._hx_index) {
 	case 0:
@@ -33371,7 +33371,7 @@ stx_nano_EquityLift.relate = function(self,value) {
 		return stx_nano_EquityLift.copy(self,null,value);
 	}
 };
-stx_nano_EquityLift.toRes = function(self) {
+stx_nano_EquityLift.toUpshot = function(self) {
 	if(stx_nano_ErrataLift.is_defined(self.get_error())) {
 		return stx_nano_lift_LiftNano.reject(stx_nano_Wildcard.__,stx_nano_Rejection.fromError(stx_nano_ErrataLift.toError(self.get_error())));
 	} else {
@@ -34863,7 +34863,7 @@ stx_nano_PledgeLift.flat_map = function(self,fn) {
 			return stx_nano_Pledge.prj(fn(t));
 		case 1:
 			var e = x.e;
-			return stx_nano_Pledge.prj(stx_nano_Pledge.fromRes(stx_nano_ResSum.Reject(e)));
+			return stx_nano_Pledge.prj(stx_nano_Pledge.fromUpshot(stx_nano_ResSum.Reject(e)));
 		}
 	});
 };
@@ -35113,7 +35113,7 @@ stx_nano_Pledge.lazy = function(fn) {
 	}));
 };
 stx_nano_Pledge.fromLazyError = function(fn) {
-	return stx_nano_Pledge.fromLazyRes(function() {
+	return stx_nano_Pledge.fromLazyUpshot(function() {
 		var this1 = fn().errate(stx_nano_DeclinationSum.REJECT);
 		return stx_nano_lift_LiftNano.reject(stx_nano_Wildcard.__,this1);
 	});
@@ -35148,7 +35148,7 @@ stx_nano_Pledge.fromTinkFuture = function(future) {
 		return stx_nano_lift_LiftNano.accept(stx_nano_Wildcard.__,t);
 	}));
 };
-stx_nano_Pledge.fromLazyRes = function(fn) {
+stx_nano_Pledge.fromLazyUpshot = function(fn) {
 	return tink_core_Future.irreversible(function(f) {
 		f(fn());
 	});
@@ -35157,7 +35157,7 @@ stx_nano_Pledge.err = function(e) {
 	var this1 = e.errate(stx_nano_DeclinationSum.REJECT);
 	return stx_nano_Pledge.make(stx_nano_lift_LiftNano.reject(stx_nano_Wildcard.__,this1));
 };
-stx_nano_Pledge.fromRes = function(chk) {
+stx_nano_Pledge.fromUpshot = function(chk) {
 	return tink_core_Future.irreversible(function(cb) {
 		cb(chk);
 	});
@@ -35186,7 +35186,7 @@ stx_nano_Pledge.fromOption = function(m) {
 		break;
 	}
 	var val1 = val;
-	return stx_nano_Pledge.fromRes(val1);
+	return stx_nano_Pledge.fromUpshot(val1);
 };
 stx_nano_Pledge.prj = function(this1) {
 	return this1;
@@ -35770,7 +35770,7 @@ stx_nano_ReceiptLift.is_defined = function(self) {
 stx_nano_ReceiptLift.has_errors = function(self) {
 	return stx_nano_ErrataLift.is_defined(self.get_error());
 };
-stx_nano_ReceiptLift.toRes = function(self) {
+stx_nano_ReceiptLift.toUpshot = function(self) {
 	if(stx_nano_ReceiptLift.has_errors(self)) {
 		return stx_nano_lift_LiftNano.reject(stx_nano_Wildcard.__,stx_nano_Rejection.fromError(stx_nano_Defect.toError(self.toDefect())));
 	} else {
@@ -36616,7 +36616,7 @@ stx_nano_ResLift.is_ok = function(self) {
 	}
 };
 stx_nano_ResLift.toPledge = function(self) {
-	return stx_nano_Pledge.fromRes(self);
+	return stx_nano_Pledge.fromUpshot(self);
 };
 stx_nano_ResLift.point = function(self,fn) {
 	switch(self._hx_index) {
@@ -36628,7 +36628,7 @@ stx_nano_ResLift.point = function(self,fn) {
 		return stx_nano_lift_LiftError.report(e);
 	}
 };
-var stx_nano_Res = {};
+var stx_nano_Upshot = {};
 stx_nano_Res._new = function(self) {
 	var this1 = self;
 	return this1;
@@ -37907,9 +37907,9 @@ stx_nano_lift_LiftPath.toArray = function(path) {
 	var next = base.split(stx_nano_lift_LiftNano.sep(stx_nano_Wildcard.__));
 	return next;
 };
-var stx_nano_lift_LiftRejectionToRes = function() { };
+var stx_nano_lift_LiftRejectionToUpshot = function() { };
 stx_nano_lift_LiftRejectionToRes.__name__ = "stx.nano.lift.LiftRejectionToRes";
-stx_nano_lift_LiftRejectionToRes.toRes = function(self) {
+stx_nano_lift_LiftRejectionToRes.toUpshot = function(self) {
 	return stx_nano_ResSum.Reject(self);
 };
 stx_nano_lift_LiftRejectionToRes.reject = function(self) {

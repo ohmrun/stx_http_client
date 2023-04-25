@@ -7,7 +7,7 @@ class RemotingPayloadLift{
   /**
     Dumps the req/res into an error for inspection if there is one.
   **/
-  public function toRes<T>(self:RemotingPayload<T>):Res<T,HttpClientFailure>{
+  public function toUpshot<T>(self:RemotingPayload<T>):Upshot<T,HttpClientFailure>{
     return if(self.has_error()){
       __.reject(self.error.concat(__.fault().of(E_HttpClient_Context(self.asset))));
     }else{
