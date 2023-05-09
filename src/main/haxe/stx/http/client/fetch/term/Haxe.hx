@@ -5,13 +5,13 @@ private enum HttpData{
   HttpStatus(dat:Int);
   HttpError(err:String);
 } 
-class Haxe implements ClientApi extends eu.ohmrun.fletcher.term.Fun1Future<RemotingPayload<Noise>,RemotingPayload<Noise>,Noise>{
+class Haxe implements ClientApi extends eu.ohmrun.fletcher.term.Fun1Future<RemotingPayload<Nada>,RemotingPayload<Nada>,Nada>{
   static public function unit(){
     return new Haxe();
   }
-  public function future(state:RemotingPayload<Noise>):Future<RemotingPayload<Noise>>{
+  public function future(state:RemotingPayload<Nada>):Future<RemotingPayload<Nada>>{
     final delegate                                    = new sys.Http(state.asset.request.url);
-    final complete  : FutureTrigger<RemotingPayload<Noise>>  = Future.trigger();
+    final complete  : FutureTrigger<RemotingPayload<Nada>>  = Future.trigger();
     final stream    = Stream.make(
       (cb:Chunk<HttpData,HttpClientFailure>->Void) ->{
         delegate.onError   = (err:String)-> {

@@ -25,7 +25,7 @@ typedef ResponseDef = {
       self.status,
       Emiter.lift(
        __.tran(
-        (_:Noise) -> {
+        (_:Nada) -> {
           return try{
             __.hold(
               Provide.fromFuture(
@@ -64,7 +64,7 @@ typedef ResponseDef = {
       Math.round(self.status),
       Emiter.lift(
         __.tran(
-         (_:Noise) -> {
+         (_:Nada) -> {
             return try{
               __.hold(
                 Provide.fromFuture(

@@ -5,7 +5,7 @@ package stx.http.client.fetch.term;
     static public function unit(){
       return new Js();
     }
-    public function defer(state:RemotingPayload<Noise>,cont:Terminal<RemotingPayload<Noise>,Noise>):Work{
+    public function defer(state:RemotingPayload<Nada>,cont:Terminal<RemotingPayload<Nada>,Nada>):Work{
       final request = state.asset.request.toJsRequest();
       return cont.receive(
         cont.later(

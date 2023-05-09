@@ -34,6 +34,6 @@ class ClientAccess{
   }
 }
 
-typedef ClientApi   = ScenarioDef<RemotingContext,Noise,Noise,HttpClientFailure>;
-typedef Client      = Scenario<RemotingContext,Noise,Noise,HttpClientFailure>;
-typedef Remote<T>   = Scenario<RemotingContext,Noise,T,HttpClientFailure>;
+typedef ClientApi   = ScenarioDef<RemotingContext,Nada,Nada,HttpClientFailure>;
+typedef Client      = Scenario<RemotingContext,Nada,Nada,HttpClientFailure>;
+typedef Remote<T>   = Scenario<RemotingContext,Nada,T,HttpClientFailure>;

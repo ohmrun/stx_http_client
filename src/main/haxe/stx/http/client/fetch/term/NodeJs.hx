@@ -8,7 +8,7 @@ package stx.http.client.fetch.term;
     static public function unit(){
       return new NodeJs();
     }
-    public function defer(state:RemotingPayload<Noise>,cont:Terminal<RemotingPayload<Noise>,Noise>):Work{
+    public function defer(state:RemotingPayload<Nada>,cont:Terminal<RemotingPayload<Nada>,Nada>):Work{
       __.log().debug('request');
       final request = state.asset.request.toNodeFetchRequest();
       final result  = NodeFetch.default_(request);
