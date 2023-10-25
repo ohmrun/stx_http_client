@@ -1,19 +1,21 @@
 package stx.http.client;
 
+using stx.Nano;
 using stx.Test;
-using Bake;
+using stx.Log;
+
 class Test{
   static macro function boot(){
-    final log = __.log().global.with_logic(
-      l -> l.or(l.pack("**/*"))
-    );
-    final bake = Bake.pop();
-    trace(bake);
+    __.logger().global().configure(
+          logger -> logger.with_logic(
+            logic -> logic.or(
+              logic.tags([])
+            )
+          )
+        );
     return macro {};
   }
   static public function main(){
-    boot();
-
     __.test().run([],[]);
   }
 }

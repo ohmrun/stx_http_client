@@ -85,7 +85,6 @@ class Haxe implements ClientApi extends eu.ohmrun.fletcher.term.Fun1Future<Remot
     }
     __.log().blank("headers added");
     if(is_post){
-      //TODO other forms of Content
       var value = haxe.Json.stringify(state.asset.request.body);
       __.log().trace(value);
       delegate.setPostBytes(haxe.io.Bytes.ofString(value));
