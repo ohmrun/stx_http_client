@@ -2,7 +2,7 @@ name: manifest
 source: file:/mnt/dat/i/prj/haxe/pub/ohmrun/stx/stx_http_client/.nostromo/ships/manifest.yaml
 path: /mnt/dat/i/prj/haxe/pub/ohmrun/stx/stx_http_client/.nostromo/ships/manifest.yaml
 version:
-  uuid: 44b46e75-2fe3-49bb-bba4-bf2de63af17e
+  uuid: 3ab1b1db-25ce-4fff-92c2-c724322a5158
   semver: 0.12.0
   gitcommit: 35c36d620fc35d3a5b879c4cd14437b0ecc3975d
   builddate: "2023-02-25T09:17:44Z"
@@ -49,6 +49,19 @@ commands:
         keypath: wm.server
         name: xc wm.server
         alias: server
+        aliasonly: false
+        description: ""
+        commands: {}
+        subs: {}
+        code:
+          language: ""
+          snippet: ""
+        mode: 0
+        disabled: false
+      watch:
+        keypath: wm.watch
+        name: watchexec -- xc wm.reload
+        alias: watch
         aliasonly: false
         description: ""
         commands: {}

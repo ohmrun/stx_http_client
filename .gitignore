@@ -3,3 +3,6 @@ yarn-error.log
 /build
 /node_modules
 /.env.machine
+/.calva
+/.clj-kondo
+/.lsp

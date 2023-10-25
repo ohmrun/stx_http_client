@@ -15,4 +15,11 @@ cd $PRJ_DIR/vendor/wiremock && java -jar wiremock.jar
 
 ```
  xh  POST http://localhost:8080/__admin/mappings/reset  
+
+```
+
+### hello world
+
+```
+echo hello
 ```

@@ -1,0 +1,118 @@
+name: manifest
+source: file:/mnt/dat/i/prj/haxe/pub/ohmrun/stx/stx_http_client/.nostromo/ships/manifest.yaml
+path: /mnt/dat/i/prj/haxe/pub/ohmrun/stx/stx_http_client/.nostromo/ships/manifest.yaml
+version:
+  uuid: c84849a5-0eee-418b-977e-842f025d62ba
+  semver: 0.12.0
+  gitcommit: 35c36d620fc35d3a5b879c4cd14437b0ecc3975d
+  builddate: "2023-02-25T09:17:44Z"
+config:
+  verbose: false
+  aliasesonly: false
+  mode: 0
+  backupcount: 10
+commands:
+  babashka:
+    keypath: babashka
+    name: ""
+    alias: babashka
+    aliasonly: false
+    description: ""
+    commands:
+      repl:
+        keypath: babashka.repl
+        name: echo "bb nrepl-server 5555"
+        alias: repl
+        aliasonly: false
+        description: ""
+        commands: {}
+        subs: {}
+        code:
+          language: ""
+          snippet: ""
+        mode: 0
+        disabled: false
+      serve:
+        keypath: babashka.serve
+        name: echo "bb nrepl-server 5555"
+        alias: serve
+        aliasonly: false
+        description: ""
+        commands: {}
+        subs: {}
+        code:
+          language: ""
+          snippet: ""
+        mode: 0
+        disabled: false
+    subs: {}
+    code:
+      language: ""
+      snippet: ""
+    mode: 0
+    disabled: false
+  foo:
+    keypath: foo
+    name: echo bar
+    alias: foo
+    aliasonly: false
+    description: ""
+    commands: {}
+    subs: {}
+    code:
+      language: ""
+      snippet: ""
+    mode: 0
+    disabled: false
+  wm:
+    keypath: wm
+    name: ""
+    alias: wm
+    aliasonly: false
+    description: ""
+    commands:
+      reload:
+        keypath: wm.reload
+        name: xc wm.reload
+        alias: reload
+        aliasonly: false
+        description: ""
+        commands: {}
+        subs: {}
+        code:
+          language: ""
+          snippet: ""
+        mode: 0
+        disabled: false
+      server:
+        keypath: wm.server
+        name: xc wm.server
+        alias: server
+        aliasonly: false
+        description: ""
+        commands: {}
+        subs: {}
+        code:
+          language: ""
+          snippet: ""
+        mode: 0
+        disabled: false
+      watch:
+        keypath: wm.watch
+        name: watchexec -- xc wm.reload
+        alias: watch
+        aliasonly: false
+        description: ""
+        commands: {}
+        subs: {}
+        code:
+          language: ""
+          snippet: ""
+        mode: 0
+        disabled: false
+    subs: {}
+    code:
+      language: ""
+      snippet: ""
+    mode: 0
+    disabled: false
