@@ -1,0 +1,58 @@
+.nh
+.TH "NOSTROMO-MOVE-CMD" "1" "Oct 2023" "nostromo 0.12.0" "nostromo manual"
+
+.SH NAME
+.PP
+nostromo-move-cmd - Move a command in nostromo manifest
+
+
+.SH SYNOPSIS
+.PP
+\fBnostromo move cmd [src.key.path] [dest.key.path] [options] [flags]\fP
+
+
+.SH DESCRIPTION
+.PP
+Move a command in nostromo manifest for a given key path.
+A key path is a '.' delimited string, e.g., "key.path" which represents
+the alias which can be run as "key path" for the actual command provided.
+
+.PP
+Manipulate nostromo manifests by moving command nodes. Using move, take
+a source key path and shift it to the destination key path with all
+subcommands in tow.
+
+.PP
+If the destination key path does not exist, it will be created
+and the node will be moved there. Optionally provide a description
+with -d to the destination.
+
+.PP
+To move a node to the root, use '.' for destination. Optionally provide
+a destination manifest using the -m flag. Otherwise the move will default
+to the core manifest.
+
+
+.SH OPTIONS
+.PP
+\fB-d\fP, \fB--description\fP=""
+	Description of the destination to move command to
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for cmd
+
+.PP
+\fB-m\fP, \fB--manifest\fP=""
+	Destination manifest to move command to
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+.PP
+\fB-v\fP, \fB--verbose\fP[=false]
+	show verbose logging
+
+
+.SH SEE ALSO
+.PP
+\fBnostromo-move(1)\fP

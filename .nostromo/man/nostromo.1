@@ -1,0 +1,39 @@
+.nh
+.TH "NOSTROMO" "1" "Oct 2023" "nostromo 0.12.0" "nostromo manual"
+
+.SH NAME
+.PP
+nostromo - nostromo is a tool to manage aliases
+
+
+.SH SYNOPSIS
+.PP
+\fBnostromo [flags]\fP
+
+
+.SH DESCRIPTION
+.PP
+nostromo is a CLI to manage aliases through simple commands to add and remove
+scoped aliases and substitutions.
+
+.PP
+Managing aliases can be tedious and difficult to set up. nostromo makes this process easy
+and reliable. The tool adds shortcuts to your .bashrc that call into the nostromo binary.
+nostromo reads and manages all aliases within its own config file.
+This is used to find and execute the actual command intended as well as any
+substitutions to simplify calls.
+
+
+.SH OPTIONS
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for nostromo
+
+.PP
+\fB-v\fP, \fB--verbose\fP[=false]
+	show verbose logging
+
+
+.SH SEE ALSO
+.PP
+\fBnostromo-add(1)\fP, \fBnostromo-completion(1)\fP, \fBnostromo-copy(1)\fP, \fBnostromo-destroy(1)\fP, \fBnostromo-detach(1)\fP, \fBnostromo-dock(1)\fP, \fBnostromo-eval(1)\fP, \fBnostromo-find(1)\fP, \fBnostromo-get(1)\fP, \fBnostromo-init(1)\fP, \fBnostromo-move(1)\fP, \fBnostromo-remove(1)\fP, \fBnostromo-rename(1)\fP, \fBnostromo-set(1)\fP, \fBnostromo-show(1)\fP, \fBnostromo-sync(1)\fP, \fBnostromo-undock(1)\fP, \fBnostromo-update(1)\fP, \fBnostromo-uuidgen(1)\fP, \fBnostromo-version(1)\fP

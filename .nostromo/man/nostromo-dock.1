@@ -1,0 +1,62 @@
+.nh
+.TH "NOSTROMO-DOCK" "1" "Oct 2023" "nostromo 0.12.0" "nostromo manual"
+
+.SH NAME
+.PP
+nostromo-dock - Dock nostromo manifests
+
+
+.SH SYNOPSIS
+.PP
+\fBnostromo dock [source]... [options] [flags]\fP
+
+
+.SH DESCRIPTION
+.PP
+Dock nostromo manifests from source locations and make commands
+available for execution.
+
+.PP
+Dock can be used to copy a single manifest or more to nostromo's config
+folder. If a docked manifest already exists with the same name then
+nostromo will overwrite that file if the identifier is different.
+
+.PP
+Run:
+
+.PP
+.RS
+
+.nf
+nostromo dock http://foo.com/edit.yaml file://path/to/install.yaml
+
+.fi
+.RE
+
+.PP
+To force docking even if identifiers are the same, use the -f flag.
+
+
+.SH OPTIONS
+.PP
+\fB-f\fP, \fB--force\fP[=false]
+	Force dock manifest
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for dock
+
+.PP
+\fB-k\fP, \fB--keep\fP[=false]
+	Keep downloaded files
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+.PP
+\fB-v\fP, \fB--verbose\fP[=false]
+	show verbose logging
+
+
+.SH SEE ALSO
+.PP
+\fBnostromo(1)\fP

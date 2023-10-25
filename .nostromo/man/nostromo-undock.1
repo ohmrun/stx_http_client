@@ -1,0 +1,55 @@
+.nh
+.TH "NOSTROMO-UNDOCK" "1" "Oct 2023" "nostromo 0.12.0" "nostromo manual"
+
+.SH NAME
+.PP
+nostromo-undock - Undock nostromo manifests
+
+
+.SH SYNOPSIS
+.PP
+\fBnostromo undock [name]... [flags]\fP
+
+
+.SH DESCRIPTION
+.PP
+Undock nostromo manifests and remove commands from being
+executable.
+
+.PP
+A manifest added to nostromo using the dock command can be undocked.
+This will delete the file from the local configuration and the commands
+will no longer be available to run.
+
+.PP
+Run:
+
+.PP
+.RS
+
+.nf
+nostromo undock edit install
+
+.fi
+.RE
+
+.PP
+To get the commands back you will need to dock the manifest again from
+the original source location.
+
+
+.SH OPTIONS
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for undock
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+.PP
+\fB-v\fP, \fB--verbose\fP[=false]
+	show verbose logging
+
+
+.SH SEE ALSO
+.PP
+\fBnostromo(1)\fP

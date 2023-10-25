@@ -1,0 +1,74 @@
+.nh
+.TH "NOSTROMO-UPDATE" "1" "Oct 2023" "nostromo 0.12.0" "nostromo manual"
+
+.SH NAME
+.PP
+nostromo-update - Update a command in nostromo manifest
+
+
+.SH SYNOPSIS
+.PP
+\fBnostromo update [key.path] [command] [options] [flags]\fP
+
+
+.SH DESCRIPTION
+.PP
+Update a command in nostromo manifest for a given key path.
+A key path is a '.' delimited string, e.g., "key.path" which represents
+the alias which can be run as "key path" for the actual command provided.
+
+.PP
+This will update appropriate command scopes for all levels in the provided
+key path. A command scope can contain a tree of sub commands and
+substitutions.
+
+.PP
+A command's mode indicates how it will be executed. By default, nostromo
+concatenates parent and child commands along the tree. There are 3 modes
+available to commands:
+
+.PP
+concatenate  Concatenate this command with subcommands exactly as defined
+independent  Execute this command with subcommands using ';' to separate
+exclusive    Execute this and only this command ignoring parent commands
+
+.PP
+You can set using -m or --mode when adding a command or globally using:
+	nostromo manifest set mode 
+
+
+.SH OPTIONS
+.PP
+\fB-a\fP, \fB--alias-only\fP[=false]
+	Add shell alias only, not a nostromo command
+
+.PP
+\fB-c\fP, \fB--code\fP=""
+	Code snippet to run for this command
+
+.PP
+\fB-d\fP, \fB--description\fP=""
+	Description of the command to update
+
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for update
+
+.PP
+\fB-l\fP, \fB--language\fP=""
+	Language of code snippet (e.g., ruby, python, perl, js)
+
+.PP
+\fB-m\fP, \fB--mode\fP=""
+	Set the mode for the command (concatenate, independent, exclusive)
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+.PP
+\fB-v\fP, \fB--verbose\fP[=false]
+	show verbose logging
+
+
+.SH SEE ALSO
+.PP
+\fBnostromo(1)\fP

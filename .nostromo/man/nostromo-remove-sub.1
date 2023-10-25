@@ -1,0 +1,41 @@
+.nh
+.TH "NOSTROMO-REMOVE-SUB" "1" "Oct 2023" "nostromo 0.12.0" "nostromo manual"
+
+.SH NAME
+.PP
+nostromo-remove-sub - Remove a substitution from nostromo manifest
+
+
+.SH SYNOPSIS
+.PP
+\fBnostromo remove sub [key.path] [alias] [flags]\fP
+
+
+.SH DESCRIPTION
+.PP
+Remove a substitution from nostromo manifest for a given key path and arg.
+A substitution allows any arguments as part of a command to be substituted
+by that value, e.g., "original-cmd //some/long/arg1 //some/long/arg2" can
+be substituted out with "cmd-alias sub1 sub2" by adding subs for the args.
+
+.PP
+This will remove the substitution for scopes beneath levels in
+the provided key path. A command scope can a tree of sub commands
+and substitutions.
+
+
+.SH OPTIONS
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for sub
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+.PP
+\fB-v\fP, \fB--verbose\fP[=false]
+	show verbose logging
+
+
+.SH SEE ALSO
+.PP
+\fBnostromo-remove(1)\fP

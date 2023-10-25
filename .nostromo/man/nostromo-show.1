@@ -1,0 +1,52 @@
+.nh
+.TH "NOSTROMO-SHOW" "1" "Oct 2023" "nostromo 0.12.0" "nostromo manual"
+
+.SH NAME
+.PP
+nostromo-show - Show nostromo configuration
+
+
+.SH SYNOPSIS
+.PP
+\fBnostromo show [flags]\fP
+
+
+.SH DESCRIPTION
+.PP
+Prints nostromo config with command tree
+and profile changes.
+
+.PP
+By default the config file is located at ~/.nostromo/ships/manifest.yaml.
+
+.PP
+Customize this with the $NOSTROMO_HOME environment variable
+
+
+.SH OPTIONS
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for show
+
+.PP
+\fB-j\fP, \fB--json\fP[=false]
+	Show manifest as json
+
+.PP
+\fB-t\fP, \fB--tree\fP[=false]
+	Show manifest as tree
+
+.PP
+\fB-y\fP, \fB--yaml\fP[=false]
+	Show manifest as yaml
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+.PP
+\fB-v\fP, \fB--verbose\fP[=false]
+	show verbose logging
+
+
+.SH SEE ALSO
+.PP
+\fBnostromo(1)\fP

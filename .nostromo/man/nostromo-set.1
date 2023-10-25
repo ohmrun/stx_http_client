@@ -1,0 +1,42 @@
+.nh
+.TH "NOSTROMO-SET" "1" "Oct 2023" "nostromo 0.12.0" "nostromo manual"
+
+.SH NAME
+.PP
+nostromo-set - Set a config item in manifest
+
+
+.SH SYNOPSIS
+.PP
+\fBnostromo set [key] [value] [flags]\fP
+
+
+.SH DESCRIPTION
+.PP
+Set a config item in manifest.
+Nostromo config items are saved in the manifest.
+
+.PP
+Use this command to set values for these settings:
+  verbose: boolean
+  aliasesOnly: boolean
+  mode: concatenate | independent | exclusive
+  backupCount: number
+	theme: default | grayscale | emoji
+
+
+.SH OPTIONS
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for set
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+.PP
+\fB-v\fP, \fB--verbose\fP[=false]
+	show verbose logging
+
+
+.SH SEE ALSO
+.PP
+\fBnostromo(1)\fP

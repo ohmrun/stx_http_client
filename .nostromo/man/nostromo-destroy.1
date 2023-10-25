@@ -1,0 +1,45 @@
+.nh
+.TH "NOSTROMO-DESTROY" "1" "Oct 2023" "nostromo 0.12.0" "nostromo manual"
+
+.SH NAME
+.PP
+nostromo-destroy - Destroy nostromo configuration
+
+
+.SH SYNOPSIS
+.PP
+\fBnostromo destroy [flags]\fP
+
+
+.SH DESCRIPTION
+.PP
+Destroy nostromo configuration and start fresh.
+
+.PP
+By default the core manifest is only destroyed and recreated.
+
+.PP
+Optionally delete the entire installation using -n flag. Note that
+this does not remove shell init file entries added by nostromo.
+You'll have to delete those manually.
+
+
+.SH OPTIONS
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for destroy
+
+.PP
+\fB-n\fP, \fB--nuke\fP[=false]
+	Nuke the entire installation
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+.PP
+\fB-v\fP, \fB--verbose\fP[=false]
+	show verbose logging
+
+
+.SH SEE ALSO
+.PP
+\fBnostromo(1)\fP

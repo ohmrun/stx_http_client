@@ -1,0 +1,84 @@
+.nh
+.TH "NOSTROMO-COMPLETION" "1" "Oct 2023" "nostromo 0.12.0" "nostromo manual"
+
+.SH NAME
+.PP
+nostromo-completion - Generate completion script
+
+
+.SH SYNOPSIS
+.PP
+\fBnostromo completion [bash|zsh|fish|powershell]\fP
+
+
+.SH DESCRIPTION
+.PP
+To load completions:
+
+.PP
+Bash:
+
+.PP
+$ source <(nostromo completion bash)
+
+.PP
+# To load completions for each session, execute once:
+  # Linux:
+  $ nostromo completion bash > /etc/bash_completion.d/nostromo
+  # macOS:
+  $ nostromo completion bash > /usr/local/etc/bash_completion.d/nostromo
+
+.PP
+Zsh:
+
+.PP
+# If shell completion is not already enabled in your environment,
+  # you will need to enable it.  You can execute the following once:
+
+.PP
+$ echo "autoload -U compinit; compinit" >> ~/.zshrc
+
+.PP
+# To load completions for each session, execute once:
+  $ nostromo completion zsh > "${fpath[1]}/_nostromo"
+
+.PP
+# You will need to start a new shell for this setup to take effect.
+
+.PP
+fish:
+
+.PP
+$ nostromo completion fish | source
+
+.PP
+# To load completions for each session, execute once:
+  $ nostromo completion fish > ~/.config/fish/completions/nostromo.fish
+
+.PP
+PowerShell:
+
+.PP
+PS> nostromo completion powershell | Out-String | Invoke-Expression
+
+.PP
+# To load completions for every new session, run:
+  PS> nostromo completion powershell > nostromo.ps1
+  # and source this file from your PowerShell profile.
+
+
+.SH OPTIONS
+.PP
+\fB-h\fP, \fB--help\fP[=false]
+	help for completion
+
+
+.SH OPTIONS INHERITED FROM PARENT COMMANDS
+.PP
+\fB-v\fP, \fB--verbose\fP[=false]
+	show verbose logging
+
+
+.SH SEE ALSO
+.PP
+\fBnostromo(1)\fP

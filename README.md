@@ -5,10 +5,10 @@
 echo "hello"
 ```
 
-### wiremock
+### wm.server
 
 ```
-cd $SCRIPT_DIR/vendor/wiremock && java -jar wiremock.jar
+cd $PRJ_DIR/vendor/wiremock && java -jar wiremock.jar
 ```
 
 ### wm.reload
