@@ -3,30 +3,34 @@ package stx.http.client;
 class Module extends Clazz{
   #if (!macro)
     #if (nodejs)
-      public function fetch():Client{
+      public function client():Client{
         __.log().debug('nodejs');
         return Scenario.lift(stx.http.client.fetch.term.NodeJs.unit());
       }
     #elseif js
-      public function fetch():Client{
+      public function client():Client{
         __.log().debug('js');
         return Scenario.lift(stx.http.client.fetch.term.Js.unit());
       }
+    #elseif interp
+      public function client():Client{
+        __.log().debug('haxe');
+        return Scenario.lift(stx.http.client.fetch.term.Haxe.unit());
+      }
     #else
-      // public function fetch():Client{
-      //   __.log().debug('haxe');
-      //   return Scenario.lift(stx.http.client.fetch.term.Haxe.unit());
-      // }
-      public function fetch():Client{
+      public function client():Client{
         __.log().debug('haxe');
         return Scenario.lift(stx.http.client.fetch.term.Tink.unit());
       }
     #end    
   #else
-    public function fetch():Client{
+    public function client():Client{
       return Scenario.lift(stx.http.client.fetch.term.Haxe.unit());
     }
   #end
+    public function fetch(options:CTR<RequestOptionsCtr,RequestOptions>,url:String,body:Option<Content>,method : HttpMethod = GET){
+      return client().provide(RemotingPayload.Make(options.apply(new RequestOptionsCtr()).fill(url,body,method)));
+    }
   @:isVar public var RemotingPayload(get,null):RemotingPayloadCtr;
   private function get_RemotingPayload():RemotingPayloadCtr{
     return __.option(this.RemotingPayload).def(() -> this.RemotingPayload = new RemotingPayloadCtr());

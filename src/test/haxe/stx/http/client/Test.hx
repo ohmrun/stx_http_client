@@ -1,6 +1,7 @@
 package stx.http.client;
 
 import stx.http.client.fetch.term.Tink;
+using stx.Pico;
 using stx.Nano;
 using stx.Test;
 using stx.Log;
@@ -34,14 +35,8 @@ class Test extends TestCase{
   }
   @stx.test.async
   public function test(async:Async){
-    final config = __.client().FetchConfig.Make(
-      'http://localhost:8080',
-      __.client().RequestOptions.Make(Headers.unit())
-    );
-    final request = __.client().Request.Make(config,GET,'minions/f',Headers.unit());
-    final payload = __.client().RemotingPayload.Make(request);
 
-    Scenario.lift(stx.http.client.fetch.term.Tink.unit()).provide(payload)
+    __.client().fetch(f -> f.Make(),'http://localhost:8080/minions/f',None)
       .environment(
         (x) -> {
           trace('done');
