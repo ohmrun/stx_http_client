@@ -27,4 +27,10 @@ abstract Content(Null<ContentSum>) from Null<ContentSum>{
     }
   }
   #end
+  
+  public function toIdealSource(){
+    return switch(this){
+      case ContentString(string) : @:privateAccess tink.io.Source.ofString(string);
+    }  
+  }
 } 

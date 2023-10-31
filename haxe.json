@@ -7,9 +7,12 @@
     "-lib" : [
       "http-status",
       "tink_core",
+      "tink_http",
       "stx_pico",
       "stx_nano",
       "stx_log",
+      "stx_assert",
+      "tink_runloop",
       "stx_coroutine",
       "fletcher",
       "bake"
@@ -65,6 +68,9 @@
         "--macro" : ["allowPackage('sys')"],
         "-lib"    : ["hxnodejs","stx_nodejs"],
         "--js"    : ".stx/build/test/nodejs/main.js"
+      },
+      "neko" : {
+        "--neko" : ".stx/build/test/neko/main.n"
       }
     }
   },

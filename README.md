@@ -1,3 +1,6 @@
+#stx_http_client
+
+
 ## Tasks 
 
 ### hello
@@ -8,7 +11,7 @@ echo "hello"
 ### wm.server
 
 ```
-cd $PRJ_DIR/vendor/wiremock && java -jar wiremock.jar
+cd $PRJ_DIR/vendor/wiremock && java -jar wiremock.jar --enable-stub-cors
 ```
 
 ### wm.reload

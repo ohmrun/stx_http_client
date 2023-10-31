@@ -1,7 +1,7 @@
 package stx.http.client.fetch.term;
 
 #if (!nodejs && js)
-  class Js implements ClientApi extends StxMemberCls{
+class Js implements ClientApi extends FletcherCls<RemotingPayload<Nada>,RemotingPayload<Nada>,Nada>{
     static public function unit(){
       return new Js();
     }
@@ -19,21 +19,20 @@ package stx.http.client.fetch.term;
             no -> state.errata(
               _ -> 
                 Refuse.make(
-                  no.usher(
+                  Some(EXTERNAL(no.usher(
                     opt -> 
                         opt.fold(
                           E_HttpClient_Unknown,
                           () -> E_HttpClient_Unknown(null)
                         )
-                  )
+                  ))),
+                  None,
+                  Some(__.here())
                 )
             ) 
           ).map(__.success)
         )
       );
-    }
-    public function get_stx_tag(){
-      return throw 'unimplemented';
     }
   }
 #end

@@ -28,7 +28,6 @@ typedef ResponseDef = {
         (_:Nada) -> {
           return try{
             __.hold(
-              Provide.fromFuture(
                 self.text().toPledge().rectify(
                   (err:Refuse<stx.fail.HttpClientFailure>) -> switch(err.data){
                     case Some(EXTERNAL(E_HttpClient_Error(ee))) :
@@ -46,7 +45,6 @@ typedef ResponseDef = {
                   ok -> __.emit(Bytes.ofString(ok),__.stop()),
                   no -> __.quit(no)
                 )
-              )
             );
           }catch(e:haxe.Exception){
             __.quit(Error.Caught(None,None,Some(__.here()),e));

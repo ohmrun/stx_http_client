@@ -7,6 +7,9 @@ typedef FetchConfigDef = {
 @:forward abstract FetchConfig(FetchConfigDef) from FetchConfigDef to FetchConfigDef{
   public function new(self) this = self;
   @:noUsing static public function lift(self:FetchConfigDef):FetchConfig return new FetchConfig(self);
+  @:noUsing static public function make(base:String,options:RequestOptions):FetchConfig {
+    return lift({base : base, options:options});
+  }
 
   public function prj():FetchConfigDef return this;
   private var self(get,never):FetchConfig;
